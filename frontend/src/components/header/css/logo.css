@@ -1,0 +1,14 @@
+.logo{
+
+    margin-left: 35px;
+}
+
+@media only screen and (max-width: 705px) {
+    .logo img{
+       display: none;
+    }
+
+    .logo{
+        margin-left: auto;
+    }
+}

@@ -1,0 +1,12 @@
+.top-bar {
+    padding-right: 70px;
+    display: flex; 
+  }
+  
+  .-basket,
+  .user-menu {
+    margin-left: 20px;
+    flex: 1; 
+  }
+  
+  

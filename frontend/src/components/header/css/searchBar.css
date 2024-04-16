@@ -1,0 +1,20 @@
+.search-bar {
+    display: flex;
+    flex-direction: row;
+    position: relative;
+    width: 180px;
+    padding-right: 40px;
+}
+
+.search-bar input {
+    width: 100%;
+    background:url('./search.png') no-repeat; /* Dodaj ścieżkę do twojego obrazka */
+    background-color: #ffffff;
+    background-position: 5px center; /* Ustaw położenie obrazka */
+    background-size: 22px 22px; /* Ustaw rozmiar obrazka */
+    border: none;
+    border-radius: 15px;
+    border-bottom: 3px solid #ffffff; 
+    padding: 7px 40px 7px 45px; /* Dostosuj padding, aby tekst nie nakrywał obrazka */
+}
+
