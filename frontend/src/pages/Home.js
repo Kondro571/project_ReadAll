@@ -1,6 +1,7 @@
 import '../App.css';
 import Header from '../components/header/Header'
 import Top from '../components/top/topSell';
+import Display from '../components/display/display';
 function App() {
   const books = [
     {
@@ -38,6 +39,7 @@ function App() {
     <>
      <Header/>
      <Top books={books}/>
+     <Display books={books}/>
     </>
   );
 }

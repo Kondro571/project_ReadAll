@@ -9,7 +9,7 @@ function UserMenu() {
         <div className="top-bar">
                 <div className="-basket">
 
-                    <a href="Basket">
+                    <a href="basket">
                         <img src={basketImage} alt="basket" height="50" />
                     </a>
 

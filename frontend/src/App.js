@@ -7,7 +7,9 @@ import Cos from './pages/aa';
 import Cos1 from './pages/bb';
 import Login from './pages/Login';
 import Registration from './pages/Registration';
-
+import Books from './pages/Books';
+import Basket from './pages/Basket';
+import Product from './pages/Product';
 
 
 
@@ -21,6 +23,9 @@ function App() {
           <Route exact path='/b' element={<Cos1/>} />
           <Route exact path='/login' element={<Login/>} />
           <Route exact path='/registration' element={<Registration/>} />
+          <Route exact path='/books' element={<Books/>} />
+          <Route exact path='/basket' element={<Basket/>} />
+          <Route exact path='/product' element={<Product/>} />
 
 
           <Route exact path='*' element={<Home/>} />

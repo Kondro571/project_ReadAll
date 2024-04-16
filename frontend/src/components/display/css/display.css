@@ -1,0 +1,96 @@
+.display-main{
+margin-top: 50px;
+
+}
+.display-tabs-main{
+    position: absolute;
+
+    margin-top: -20px; 
+    margin-left: 210px;
+    
+    padding: 15px 30px;
+    align-items: flex-start;
+}
+
+.display-tabs-main span {
+    position: absolute;
+
+    color: aliceblue;
+    font-size: 20px;
+    
+    padding: 30px 55px; 
+    background-color: blue;
+
+
+    margin-left: -154px;
+    margin-top: -30px; 
+
+
+
+}
+.display-tabs-main button {
+    
+    color: aliceblue;
+    background-color: rgb(106, 106, 229);
+    padding: 15px;
+    font-size: 20px;
+    border: none;
+
+    box-shadow: 2px 4px 4px black;
+}
+.display-tabs-main button:hover {
+    
+    background-color: rgb(82, 82, 235);
+
+    box-shadow: 2px 4px 10px black;
+}
+
+.display-tab-main-content {
+    margin: 0 auto;
+    width: 80%;
+    background-color: aquamarine;
+    padding: 20px;
+    padding-top: 70px;
+}
+
+.display-tab-main-content .product-card {
+
+    display: inline-block;
+    width: 250px;
+    height: 300px;
+    margin-bottom: 20px;
+    margin: 20px;
+    background-color: aliceblue;
+}
+
+.display-tab-main-content .product-card img {
+    height: 150px;
+    width: 100px;
+    margin-top: 10px;
+}
+
+@media only screen and (max-width: 705px) {
+
+    .display-tabs-main{
+    
+        margin-top: -20px; 
+        margin-left: 110px; 
+        padding: 15px 30px;
+    }
+    
+    .display-tabs-main span {
+    
+        font-size: 15px;
+        padding: 20px 45px;     
+        margin-left: -122px;
+        margin-top: -30px; 
+    
+    }
+    .display-tabs-main button {
+        
+        padding: 15px;
+        font-size: 14px;
+    }
+
+
+}
