@@ -24,5 +24,4 @@ public class TransactionController {
         return transactionRepository.save(transaction);
     }
 
-    // Inne metody kontrolera, takie jak pobieranie pojedynczej transakcji, aktualizacja, usunięcie itp.
 }

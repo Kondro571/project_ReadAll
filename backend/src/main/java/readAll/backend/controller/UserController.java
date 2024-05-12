@@ -9,18 +9,18 @@ import readAll.backend.repository.UserRepository;
 import java.util.List;
 
 @RestController
-@RequestMapping("/api/users")
+@RequestMapping("/users")
 public class UserController {
     
     @Autowired
     private UserRepository userRepository;
 
-    @GetMapping("/")
+    @GetMapping
     public List<User> getAllUsers() {
         return userRepository.findAll();
     }
 
-    @PostMapping("/")
+    @PostMapping
     public User createUser(@RequestBody User user) {
         return userRepository.save(user);
     }

@@ -1,8 +1,10 @@
 import React, { useRef } from 'react';
+import { Link } from 'react-router-dom';
+
 import placeholder from "./../../images/placeholder.png";
 import "./style.css";
 
-function TopBooksThisWeek({ books }) {
+function TopBooksThisWeek({ products }) {
     const containerRef = useRef(null);
 
     const handleScroll = (direction) => {
@@ -25,15 +27,17 @@ function TopBooksThisWeek({ books }) {
         {"<"}
       </div>
       <div className="top-this-week-wrapper" ref={containerRef}>
-        {books.map((book, index) => (
-          <div className="product-card" key={index}>
-            <img src={placeholder} alt={book.title} />
-            <div className="product-info">
-              <h3>{book.title}</h3>
-              <p>Author: {book.author}</p>
-              <p>Price: ${book.price}</p>
+        {products.map((product, index) => (
+      <Link to={`/product/${product.id}`}>
+        <div className="product-card" key={index}>
+              <img src={placeholder} alt={product.name} />
+              <div className="product-info">
+                <h3>{product.name}</h3>
+                <p>Author: {product.author}</p>
+                <p>Price: ${product.price}</p>
+              </div>
             </div>
-          </div>
+        </Link>
         ))}
       </div>
       <div className="nav-button right-nav" onClick={() => handleScroll('right')}>

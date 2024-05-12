@@ -1,0 +1,19 @@
+--category
+INSERT INTO Category (name, description) VALUES ('Fantasy', 'Books from the fantasy genre.');
+INSERT INTO Category (name, description) VALUES ('Fiction', 'Classic novels and contemporary literature.');
+INSERT INTO Category (name, description) VALUES ('Non-fiction', 'Books based on facts and historical events.');
+INSERT INTO Category (name, description) VALUES ('Mystery', 'Books from the mystery and thriller genre.');
+
+INSERT INTO Category (name, description) VALUES ('Shonen', 'Manga aimed primarily at younger male audience.');
+INSERT INTO Category (name, description) VALUES ('Shojo', 'Manga aimed primarily at younger female audience.');
+INSERT INTO Category (name, description) VALUES ('Seinen', 'Manga aimed at older male audience.');
+INSERT INTO Category (name, description) VALUES ('Josei', 'Manga aimed at older female audience.');
+
+INSERT INTO Category (name, description) VALUES ('Superheroes', 'Comics about superheroes and their adventures.');
+INSERT INTO Category (name, description) VALUES ('Comedy', 'Humorous and comedic comics.');
+INSERT INTO Category (name, description) VALUES ('Science fiction', 'Comics from the science fiction genre.');
+INSERT INTO Category (name, description) VALUES ('Adventure', 'Comics telling stories of adventures and journeys.');
+
+INSERT INTO Category (name, description) VALUES ('Book', 'General category for books.');
+INSERT INTO Category (name, description) VALUES ('Manga', 'General category for manga.');
+INSERT INTO Category (name, description) VALUES ('Comic', 'General category for comics.');

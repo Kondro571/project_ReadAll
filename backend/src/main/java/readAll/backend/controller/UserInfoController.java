@@ -9,18 +9,18 @@ import readAll.backend.repository.UserInfoRepository;
 import java.util.List;
 
 @RestController
-@RequestMapping("/api/user-info")
+@RequestMapping("/user-info")
 public class UserInfoController {
     
     @Autowired
     private UserInfoRepository userInfoRepository;
 
-    @GetMapping("/")
+    @GetMapping
     public List<UserInfo> getAllUserInfos() {
         return userInfoRepository.findAll();
     }
 
-    @PostMapping("/")
+    @PostMapping
     public UserInfo createUserInfo(@RequestBody UserInfo userInfo) {
         return userInfoRepository.save(userInfo);
     }

@@ -19,7 +19,7 @@
     
     z-index: 1; 
   }
-  
+
   .top-this-week-wrapper {
     display: flex;
     overflow-x: auto;
@@ -33,6 +33,10 @@
     align-items: center;
 
   }
+
+  .top-this-week-wrapper a{
+    text-decoration: none;  
+    }
   
   .top-this-week-container .product-card {
     background-color: aliceblue;

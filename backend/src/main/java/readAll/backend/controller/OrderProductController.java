@@ -9,18 +9,18 @@ import readAll.backend.repository.OrderProductRepository;
 import java.util.List;
 
 @RestController
-@RequestMapping("/api/order-products")
+@RequestMapping("/order-products")
 public class OrderProductController {
     
     @Autowired
     private OrderProductRepository orderProductRepository;
 
-    @GetMapping("/")
+    @GetMapping
     public List<OrderProduct> getAllOrderProducts() {
         return orderProductRepository.findAll();
     }
 
-    @PostMapping("/")
+    @PostMapping
     public OrderProduct createOrderProduct(@RequestBody OrderProduct orderProduct) {
         return orderProductRepository.save(orderProduct);
     }

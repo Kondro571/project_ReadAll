@@ -9,7 +9,7 @@ import Login from './pages/Login';
 import Registration from './pages/Registration';
 import Books from './pages/Books';
 import Basket from './pages/Basket';
-import Product from './pages/Product';
+import ProductPage from './pages/Product';
 
 
 
@@ -25,7 +25,7 @@ function App() {
           <Route exact path='/registration' element={<Registration/>} />
           <Route exact path='/books' element={<Books/>} />
           <Route exact path='/basket' element={<Basket/>} />
-          <Route exact path='/product' element={<Product/>} />
+          <Route exact path='/product/:prodId' element={<ProductPage/>} />
 
 
           <Route exact path='*' element={<Home/>} />
