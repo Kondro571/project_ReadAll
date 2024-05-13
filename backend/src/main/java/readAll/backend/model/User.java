@@ -2,6 +2,7 @@ package readAll.backend.model;
 
 // User.java
 import jakarta.persistence.*;
+import readAll.backend.enums.Role;
 
 @Entity
 @Table(name = "Users")
@@ -13,15 +14,19 @@ public class User {
     private String password;
     
     @Column(name = "email_address")
-    private String emailAddress;
+    private String email;
     
-    private String role;
-    
-    private String status;
 
+    @Enumerated(EnumType.STRING)
+    @Column(nullable = false)
+    private Role role;
+    
+    // private String status;
 
     @OneToOne(mappedBy = "user")
     private UserInfo userInfo;
+
+
 
 
 
@@ -44,29 +49,29 @@ public class User {
         this.password = password;
     }
     
-    public String getEmailAddress() {
-        return emailAddress;
+    public String getEmail() {
+        return email;
     }
     
-    public void setEmailAddress(String emailAddress) {
-        this.emailAddress = emailAddress;
+    public void setEmail(String emailAddress) {
+        this.email = emailAddress;
     }
 
-    public String getRole() {
+    public Role getRole() {
         return role;
     }
     
-    public void setRole(String role) {
+    public void setRole(Role role) {
         this.role = role;
     }
     
-    public String getStatus() {
-        return status;
-    }
+    // public String getStatus() {
+    //     return status;
+    // }
     
-    public void setStatus(String status) {
-        this.status = status;
-    }
+    // public void setStatus(String status) {
+    //     this.status = status;
+    // }
     
 }
 
