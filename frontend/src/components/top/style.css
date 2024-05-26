@@ -45,6 +45,8 @@
     flex: 0 0 auto; 
     margin-right: 40px;
     display: flex; 
+    border-radius: 8px;
+
   }
   
   .top-this-week-container .product-card img {
@@ -76,6 +78,7 @@
     justify-content: center;
     align-items: center;
     cursor: pointer;
+    border-radius: 20px;
   }
   
   .top-this-week-container .left-nav {

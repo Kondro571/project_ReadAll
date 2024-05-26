@@ -66,11 +66,11 @@ public class SecurityConfig {
                 .sessionManagement(c -> c.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
                 .authorizeHttpRequests(auth -> auth .requestMatchers(toH2Console()).permitAll())
                 .authorizeHttpRequests((requests) -> requests
-                        .requestMatchers("/h2-console/**").permitAll()
-                        .requestMatchers("/baskets/**").hasRole("USER")
-                        .requestMatchers(HttpMethod.POST, "/products/**").hasRole("ADMIN")
-                        .requestMatchers(HttpMethod.PUT, "/products/**").hasRole("ADMIN")
-                        .requestMatchers(HttpMethod.DELETE, "/products/**").hasRole("ADMIN")
+                        // .requestMatchers("/h2-console/**").permitAll()
+                        // .requestMatchers("/baskets/**").hasRole("USER")
+                        // .requestMatchers(HttpMethod.POST, "/products/**").hasRole("ADMIN")
+                        // .requestMatchers(HttpMethod.PUT, "/products/**").hasRole("ADMIN")
+                        // .requestMatchers(HttpMethod.DELETE, "/products/**").hasRole("ADMIN")
                         .anyRequest().permitAll())
         ;
         return http.build();
