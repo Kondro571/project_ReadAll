@@ -53,7 +53,7 @@ public class BasketController {
 
     @PostMapping("/me")
     public ResponseEntity<Basket> addProductToBasket(@RequestBody BasketDto basketDto) {
-        System.out.println("lllllll");
+
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         UserDto userDto = (UserDto) authentication.getPrincipal();
 

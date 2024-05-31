@@ -23,14 +23,6 @@ function Header() {
         if (token !== null) {
             setIsAuthenticated(false); 
 
-            const decoded = jwtDecode(token);
-            console.log(decoded.role);
-            if (decoded.role === "ADMIN") {
-                setIsAdmin(true); 
-            } else {
-                setIsAdmin(false); 
-                
-            }
         } else {
             setIsAuthenticated(true);
         }

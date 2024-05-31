@@ -9,4 +9,35 @@
     flex: 1; 
   }
   
+  .user-menu {
+    position: relative;
+    display: inline-block;
+  }
   
+  .menu-items {
+    display: none;
+    position: absolute;
+    top: 100%;
+    right: 0;
+    background-color: white;
+    border: 1px solid #ccc;
+    box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+    z-index: 1;
+  }
+  
+  .user-menu:hover .menu-items {
+    display: block;
+    width: 120px;
+    font-size: 10px;
+  }
+  
+  .menu-btn {
+    display: block;
+    padding: 10px;
+    text-decoration: none;
+    color: black;
+  }
+  
+  .menu-btn:hover {
+    background-color: #f1f1f1;
+  }

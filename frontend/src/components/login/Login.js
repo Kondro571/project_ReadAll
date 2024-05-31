@@ -3,9 +3,12 @@ import logoImage from "./../../images/header/logo.png"
 import { setAuthHeader } from "../../services/BackendService";
 
 import "./css/login-registration.css"
+
 function LoginForm() {
+    setAuthHeader(null);
     const [login, setLogin] = useState("");
     const [password, setPassword] = useState("");
+    const [errorMessage, setErrorMessage] = useState(""); // Stan do przechowywania wiadomości o błędzie
 
     const onSubmit = (event) => {
         event.preventDefault();
@@ -14,9 +17,8 @@ function LoginForm() {
             headers: {"content-type": "application/json"},
             body: JSON.stringify({email: login, password: password})
         }).then(response => {
-            if (response.status == 200) {
+            if (response.status === 200) {
                 return response.json();
-
             } else {
                 return null;
             }
@@ -24,12 +26,15 @@ function LoginForm() {
             if (data !== null) {
                 console.log(data["token"]);
                 setAuthHeader(data["token"]);
-                window.location.href="http://localhost:3000"
-                
+                window.location.href="http://localhost:3000";
             } else {
                 console.log("Nie udało się zalogować");
                 setAuthHeader(null);
+                setErrorMessage("Wrong email or password"); // Ustawienie wiadomości o błędzie
             }
+        }).catch(error => {
+            console.error("Błąd:", error);
+            setErrorMessage("Error. Try layter"); // Ustawienie wiadomości o błędzie w przypadku wyjątku
         });
     }
 
@@ -44,7 +49,7 @@ function LoginForm() {
 
                 <form onSubmit={onSubmit}>
                     <div className="messages">
-                        {/* Tutaj wyświetl komunikaty */}
+                        {errorMessage && <p className="error">{errorMessage}</p>} {/* Wyświetlanie wiadomości o błędzie */}
                     </div>
                     <input type="email" placeholder="Email" value={login} onChange={(e) => setLogin(e.target.value)} required />
                     <input type="password" placeholder="Password" value={password} onChange={(e) => setPassword(e.target.value)} required />
