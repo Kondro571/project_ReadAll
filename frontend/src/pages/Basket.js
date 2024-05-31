@@ -1,44 +1,51 @@
+import React, { useState, useEffect } from 'react';
 import '../App.css';
-import Header from '../components/header/Header'
-import Basket from '../components/basket/basket'
+import Header from '../components/header/Header';
+import BasketComp from '../components/basket/basket';
+import Product from '../models/productModel';
+import Category from '../models/categoryModel';
+import Basket from '../models/BasketModel';
+import { getAuthToken } from "../services/BackendService"; // Upewnij się, że masz tę funkcję
+
+
 function App() {
-  const books = [
-    {
-      coverImage: './images/placeholder.jpg',
-      title: 'Tytuł  1',
-      author: 'Autor  1',
-      price: 20.99
-    },
-    {
-      coverImage: './images/placeholder.jpg',
-      title: 'Tytuł  2',
-      author: 'Autor  2',
-      price: 99.99
-    },
-    {
-      coverImage: './images/placeholder.jpg',
-      title: 'Tytuł  3',
-      author: 'Autor  3',
-      price: 99.99
-    },
-    {
-      coverImage: './images/placeholder.jpg',
-      title: 'Tytuł  4',
-      author: 'Autor  4',
-      price: 99.99
-    },
-    {
-      coverImage: './images/placeholder.jpg',
-      title: 'Tytuł  5',
-      author: 'Autor  5',
-      price: 99.99
-    },
-  ];
+  const [basket, setBasket] = useState(null);
+
+  useEffect(() => {
+    fetchBasketData();
+  }, []);
+
+  const fetchBasketData = async () => {
+    try {
+      const token = getAuthToken();
+      if (!token) {
+        throw new Error('JWT token not found');
+      }
+
+      const response = await fetch('http://localhost:8080/baskets/me', {
+        method: 'GET',
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': `Bearer ${token}` 
+        }
+      });
+
+      if (!response.ok) {
+        throw new Error('Failed to fetch basket data');
+      }
+
+      const data = await response.json();
+      console.log(data);
+      setBasket(data); 
+    } catch (error) {
+      console.error('Error fetching basket data:', error);
+    }
+  };
+
   return (
     <>
-     <Header/>
-     <Basket books={books}/>
-     
+      <Header />
+      <BasketComp basket={basket} />
     </>
   );
 }

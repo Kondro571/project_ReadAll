@@ -36,6 +36,8 @@ public class SecurityConfig {
         configuration.setAllowedMethods(Arrays.asList(
                 HttpMethod.GET.name(),
                 HttpMethod.POST.name(),
+                HttpMethod.DELETE.name(),
+                HttpMethod.PUT.name(),
                 HttpMethod.OPTIONS.name()));
         configuration.setAllowedHeaders(Arrays.asList(
                 HttpHeaders.AUTHORIZATION,
@@ -60,8 +62,6 @@ public class SecurityConfig {
                         .requestMatchers(AntPathRequestMatcher.antMatcher("/h2-console/**")).permitAll()
                 )
                 .headers(headers -> headers.frameOptions().disable())
-                // .csrf(csrf -> csrf
-                //         .ignoringRequestMatchers(AntPathRequestMatcher.antMatcher("/h2-console/**")))
                 .csrf(AbstractHttpConfigurer::disable)
                 .sessionManagement(c -> c.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
                 .authorizeHttpRequests(auth -> auth .requestMatchers(toH2Console()).permitAll())
@@ -72,6 +72,7 @@ public class SecurityConfig {
                         // .requestMatchers(HttpMethod.PUT, "/products/**").hasRole("ADMIN")
                         // .requestMatchers(HttpMethod.DELETE, "/products/**").hasRole("ADMIN")
                         .anyRequest().permitAll())
+                        
         ;
         return http.build();
     }

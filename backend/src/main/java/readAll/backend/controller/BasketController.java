@@ -14,6 +14,7 @@ import readAll.backend.model.User;
 import readAll.backend.repository.BasketRepository;
 import readAll.backend.repository.ProductRepository;
 import readAll.backend.services.UserService;
+import org.springframework.security.access.prepost.PreAuthorize;
 
 import org.springframework.security.core.Authentication;
 
@@ -42,7 +43,7 @@ public class BasketController {
         return basketRepository.save(basket);
     }
 
-     @GetMapping("/me")
+    @GetMapping("/me")
     public ResponseEntity<List<Basket>> getMyBasket() {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         UserDto userDto = (UserDto) authentication.getPrincipal();
@@ -70,4 +71,20 @@ public class BasketController {
         return new ResponseEntity<>(savedBasket, HttpStatus.CREATED);
     }
 
+
+
+    @DeleteMapping("/me/{basketId}")
+    public ResponseEntity<Void> deleteBasket(@PathVariable Long basketId) {
+        System.out.println("sssssssssssssssssssssss");
+        Basket basket = basketRepository.findById(basketId).orElse(null);
+
+        if (basket == null) {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
+        
+        basketRepository.delete(basket);
+        return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+    }
+
+    
 }

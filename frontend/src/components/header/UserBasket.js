@@ -44,12 +44,12 @@ function UserMenu() {
     return (
         <div className="top-bar">
             <div className="basket">
-                <a href="basket">
+                <a href="/basket">
                     <img src={basketImage} alt="basket" height="50" />
                 </a>
             </div>
             <div className="user-menu" onMouseEnter={toggleMenu} onMouseLeave={toggleMenu}>
-                <a href="login">
+                <a href="/profile">
                     <img src={accountImage} alt="account" height="50" />
                 </a>
                 {isMenuOpen && (
