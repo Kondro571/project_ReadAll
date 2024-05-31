@@ -600,3 +600,15 @@ The connection was not closed by the application and is garbage collected [90018
 	at org.h2.message.DbException.getJdbcSQLException(DbException.java:690)
 	at org.h2.message.DbException.getJdbcSQLException(DbException.java:489)
 	... 97 more
+2024-05-30 21:54:42.057028+02:00 jdbc[13]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Błąd składniowy w wyrażeniu SQL "[*]selcet * from users"; oczekiwano "SAVEPOINT, SCRIPT, SHUTDOWN"
+Syntax error in SQL statement "[*]selcet * from users"; expected "SAVEPOINT, SCRIPT, SHUTDOWN"; SQL statement:
+selcet * from users [42001-224]
+2024-05-30 23:27:36.984424+02:00 jdbc[13]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Błąd składniowy w wyrażeniu SQL "SELECT * FROM [*]USER"; oczekiwano "identifier"
+Syntax error in SQL statement "SELECT * FROM [*]USER"; expected "identifier"; SQL statement:
+SELECT * FROM USER [42001-224]
+2024-05-30 23:41:48.619206+02:00 jdbc[13]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Błąd składniowy w wyrażeniu SQL "SELECT * FROM [*]USER"; oczekiwano "identifier"
+Syntax error in SQL statement "SELECT * FROM [*]USER"; expected "identifier"; SQL statement:
+SELECT * FROM USER [42001-224]

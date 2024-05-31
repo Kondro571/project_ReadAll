@@ -1,7 +1,9 @@
 package readAll.backend.model;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 
 import jakarta.persistence.*;
 import java.time.LocalDateTime;
+import java.util.List;
 
 @Entity
 @Table(name = "Orders")
@@ -25,6 +27,10 @@ public class Order {
     private String address;
     
     private String service;
+    
+    @OneToMany(mappedBy = "order", cascade = CascadeType.ALL)
+    @JsonManagedReference
+    private List<OrderProduct> orderProducts;
 
     public Long getId() {
         return id;
@@ -80,6 +86,14 @@ public class Order {
     
     public void setService(String service) {
         this.service = service;
+    }
+
+    public List<OrderProduct> getOrderProducts() {
+        return orderProducts;
+    }
+    
+    public void setOrderProducts(List<OrderProduct> orderProducts) {
+        this.orderProducts = orderProducts;
     }
 
     

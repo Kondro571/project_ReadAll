@@ -58,5 +58,6 @@ public class UserAuthenticationProvider {
 
         return new UsernamePasswordAuthenticationToken(user, null, Arrays.asList(user.getRole()));
     }
+    
 
 }
