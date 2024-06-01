@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react';
 import '../App.css';
 import Header from '../components/header/Header';
-import Profile from '../components/profile/UserInfo';
+import AdminPanel from '../components/admin/AdminPanel';
 
 
 
@@ -12,7 +12,7 @@ function App() {
   return (
     <>
       <Header/>
-      <Profile/>
+      <AdminPanel/>
 
     </>
   );

@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import logoImage from "./../../images/header/logo.png"
 import { setAuthHeader } from "../../services/BackendService";
 
-import "./css/login-registration.css"
+import "./login-registration.css"
 
 function LoginForm() {
     setAuthHeader(null);

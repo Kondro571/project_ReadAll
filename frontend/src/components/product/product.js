@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import placeholder from "./../../images/placeholder.png";
 import { getAuthToken } from "../../services/BackendService"; // Upewnij się, że masz tę funkcję
 
-import "./css/product.css";
+import "./product.css";
 
 function Product({ product }) {
   const { id, title, author, coverImage, price, categories } = product;
@@ -94,7 +94,8 @@ function Product({ product }) {
 
       <div className='product-display'>
         <div className="product-image">
-          <img src={coverImage || placeholder} alt={title} />
+          <img src={`/images/${product.image}` || placeholder} alt={title} />
+          
         </div>
         <div className="product-info">
           <h2>{title}</h2>

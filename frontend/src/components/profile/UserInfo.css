@@ -1,0 +1,85 @@
+.user-info {
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 20px;
+    padding-top: 130px;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    background-color: #f9f9f9;
+  }
+  
+  .user-info h2 {
+    text-align: center;
+    margin-bottom: 20px;
+  }
+  
+  .user-info form {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 10px;
+  }
+  
+  .user-info form div {
+    display: flex;
+    flex-direction: column;
+  }
+  
+  .user-info form label {
+    margin-bottom: 5px;
+    font-weight: bold;
+  }
+  
+  .user-info form input {
+    padding: 8px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+  }
+  
+  .user-info form button {
+    margin-top: 10px;
+    padding: 10px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+  }
+  
+  .user-info form button[type="submit"] {
+    background-color: #4CAF50;
+    color: white;
+  }
+  
+  .user-info form button[type="button"] {
+    background-color: #f44336;
+    color: white;
+  }
+  
+  .user-info p {
+    margin: 10px 0;
+  }
+  
+  .user-info .orders-list {
+    list-style-type: none;
+    padding: 0;
+  }
+  
+  .user-info .order-item {
+    margin-bottom: 20px;
+    padding: 15px;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    background-color: #fff;
+  }
+  
+  .user-info .order-item p {
+    margin: 5px 0;
+  }
+  
+  .user-info .order-item ul {
+    list-style-type: none;
+    padding: 0;
+  }
+  
+  .user-info .order-item ul li {
+    margin: 5px 0;
+  }
+  

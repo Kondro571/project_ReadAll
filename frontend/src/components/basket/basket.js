@@ -2,7 +2,7 @@ import React from 'react';
 import placeholder from "./../../images/placeholder.png";
 import { getAuthToken } from "../../services/BackendService"; // Upewnij się, że masz tę funkcję
 
-import "./css/basket.css"
+import "./basket.css"
 
 function CartAndSummary({ basket}) {
   console.log("tttttt");
@@ -52,7 +52,8 @@ function CartAndSummary({ basket}) {
       <aside className="cart">
         {basket.map((item, index) => (
           <div className="product" key={index}>
-            <img src={placeholder} alt={`Product ${index + 1}`} />
+            <img src={`/images/${item.product.image}` || placeholder} alt={`Product ${index + 1}`} />
+            
             <div className="product-info">
               <h3>{item.product.name}</h3>
               <p>Author: {item.product.author}</p>

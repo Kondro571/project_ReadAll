@@ -23,7 +23,7 @@ class Navigation extends React.Component {
                 <ol className={`menu-list ${this.state.isMenuOpen ? 'open' : ''}`}>
                     <li className="main-page-link"><a href="#">Main page</a></li>
                     <li>
-                        <a href="books">Books</a>
+                        <a href="/books">Books</a>
                     </li>
                     <li>
                         <a href="#">Comics</a>

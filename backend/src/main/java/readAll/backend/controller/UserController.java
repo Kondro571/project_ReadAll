@@ -1,15 +1,20 @@
 package readAll.backend.controller;
 
+import org.springframework.security.core.Authentication;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
 
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.PersistenceContext;
 import jakarta.persistence.Query;
+import readAll.backend.dtos.UserDto;
 import readAll.backend.model.User;
 import readAll.backend.repository.UserRepository;
+import org.springframework.security.core.context.SecurityContextHolder;
+
 
 import java.util.List;
 
@@ -27,6 +32,16 @@ public class UserController {
     public List<User> getAllUsers() {
         return userRepository.findAll();
     }
+
+    
+    @GetMapping("/me")
+    public ResponseEntity<UserDto> getCurrentUser() {
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        UserDto userDto = (UserDto) authentication.getPrincipal();
+        
+        return ResponseEntity.ok(userDto);
+    }
+
 
     // @PostMapping
     // public User createUser(@RequestBody User user) {

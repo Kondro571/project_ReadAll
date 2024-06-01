@@ -2,13 +2,15 @@ import { useState, useEffect } from 'react';
 import '../App.css';
 import Header from '../components/header/Header';
 import Top from '../components/top/topSell';
-import Display from '../components/display/display';
+import Display from '../components/display/displayAll';
 import Product from '../models/productModel';
 import Category from '../models/categoryModel';
 
-
 function App() {
   const [products, setProducts] = useState([]);
+  const [books, setBooks] = useState([]);
+  const [mangas, setMangas] = useState([]);
+  const [comics, setComics] = useState([]);
 
   useEffect(() => {
     fetch('http://localhost:8080/products')
@@ -44,17 +46,20 @@ function App() {
         });
 
         setProducts(fetchedProducts);
+        setBooks(fetchedProducts.filter(product => product.type === 'Book'));
+        setMangas(fetchedProducts.filter(product => product.type === 'Manga'));
+        setComics(fetchedProducts.filter(product => product.type === 'Comic'));
       })
       .catch(error => console.error('Error fetching data:', error));
   }, []);
+
   return (
     <>
       <Header/>
       <Top products={products}/>
-      <Display books={products}/>
+      <Display books={books} mangas={mangas} comics={comics}/>
     </>
   );
 }
 
 export default App;
-

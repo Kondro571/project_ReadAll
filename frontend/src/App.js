@@ -10,9 +10,10 @@ import Registration from './pages/Registration';
 import Books from './pages/Books';
 import Basket from './pages/Basket';
 import ProductPage from './pages/Product';
-
-
-
+import Admin from './pages/Admin';
+import Profil from './pages/Profile';
+import Filter from './pages/Filter';
+import FilteredProduct from './pages/FilteredProduct';
 function App() {
   return (
     <Router>
@@ -26,6 +27,12 @@ function App() {
           <Route exact path='/books' element={<Books/>} />
           <Route exact path='/basket' element={<Basket/>} />
           <Route exact path='/product/:prodId' element={<ProductPage/>} />
+
+          <Route exact path='/admin' element={<Admin/>} />
+          <Route exact path='/profile' element={<Profil/>} />
+          <Route exact path='/filter' element={<Filter/>} />
+          <Route path="/filtered-products" element={<FilteredProduct/>} />
+
 
 
           <Route exact path='*' element={<Home/>} />
