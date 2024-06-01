@@ -169,6 +169,9 @@ function UserInfo() {
             <label>Address:</label>
             <input type="text" name="address" value={userInfo.address} onChange={handleInputChange} />
           </div>
+          <div>
+            
+          </div>
           <button type="submit">Save</button>
           <button type="button" onClick={() => setIsEditing(false)}>Cancel</button>
         </form>

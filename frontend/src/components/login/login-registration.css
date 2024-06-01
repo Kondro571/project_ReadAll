@@ -39,7 +39,7 @@ h1 {
     line-height: normal;
     }
 
-input[type="email"], input[type="password"] {
+.login-container input[type="email"], input[type="password"] {
     font-size: 17px;
     height:55px;
     padding: 5px;

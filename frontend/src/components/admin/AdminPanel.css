@@ -1,0 +1,42 @@
+.add-product {
+    margin: 20px;
+    padding: 20px;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    max-width: 400px;
+    background-color: #f9f9f9;
+    padding-top: 130px;
+  }
+  
+  .add-product h2 {
+    margin-bottom: 20px;
+  }
+  
+  .add-product form {
+    display: flex;
+    flex-direction: column;
+  }
+  
+  .add-product input[type="text"],
+  .add-product input[type="number"],
+  .add-product select,
+  .add-product input[type="file"] {
+    margin-bottom: 10px;
+    padding: 8px;
+    font-size: 16px;
+  }
+  
+  .add-product button {
+    padding: 10px;
+    font-size: 16px;
+    background-color: #28a745;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+  }
+  
+  .add-product button:hover {
+    background-color: #218838;
+  }
+  

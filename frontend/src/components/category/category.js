@@ -11,31 +11,31 @@ const Category = () => {
         <div className="category-tile">
           <Link to='/filtered-products?category=Fantasy&type=Book'>
             <img src={img} alt="Category Image" />
-            <p>Kategoria 1</p>
+            <p>Fantasy</p>
           </Link>
         </div>
         <div className="category-tile">
-          <Link to='/filtered-products?category=Kategoria 2&type=Book'>
+          <Link to='/filtered-products?category=Fiction&type=Book'>
             <img src={img} alt="Category Image" />
-            <p>Kategoria 2</p>
+            <p>Fiction</p>
           </Link>
         </div>
         <div className="category-tile">
-          <Link to='/filtered-products?category=Kategoria 3&type=Book'>
+          <Link to='/filtered-products?category=Romance&type=Book'>
             <img src={img} alt="Category Image" />
-            <p>Kategoria 3</p>
+            <p>Romance</p>
           </Link>
         </div>
         <div className="category-tile">
-          <Link to='/filtered-products?category=Kategoria 4&type=Book'>
+          <Link to='/filtered-products?category=Horror&type=Book'>
             <img src={img} alt="Category Image" />
-            <p>Kategoria 4</p>
+            <p>Horror</p>
           </Link>
         </div>
         <div className="category-tile">
-          <Link to='/filtered-products?category=Kategoria 5&type=Book'>
+          <Link to='/filtered-products?category=Science fiction&type=Book'>
             <img src={img} alt="Category Image" />
-            <p>Kategoria 5</p>
+            <p>Science fiction</p>
           </Link>
         </div>
         <div className="category-tile">
