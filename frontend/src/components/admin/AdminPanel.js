@@ -50,13 +50,17 @@ function AddProduct() {
     
     // Save the image file
     const formData = new FormData();
-    formData.append('images', product.image);
+    formData.append('image', product.image);
 
     try {
-      await fetch('/upload-image', {
-        method: 'POST',
-        body: formData,
-      });
+        const imageResponse = await fetch('http://localhost:8080/upload-image', {
+          method: 'POST',
+          body: formData,
+        });
+  
+        if (!imageResponse.ok) {
+          throw new Error('Image upload failed');
+        }
 
       // Handle product data submission to backend
       const response = await fetch('http://localhost:8080/products', {

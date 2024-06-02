@@ -1,42 +1,57 @@
 package readAll.backend.controller;
-
-import org.springframework.web.bind.annotation.*;
+import org.apache.tomcat.util.http.fileupload.IOUtils;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.core.io.ResourceLoader;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
+
+import jakarta.servlet.http.HttpServletRequest;
 
 import java.io.File;
 import java.io.IOException;
-import java.nio.file.Files;
-import java.nio.file.Path;
-import java.nio.file.Paths;
+import java.io.InputStream;
+
+import org.springframework.core.io.Resource;
+import org.springframework.core.io.ResourceLoader;
 
 @RestController
 public class FileUploadController {
 
-    private static String UPLOAD_DIR = "public/images/";
+    @Value("${upload.path}")
+    private String uploadPath;
+
+    
+    @Autowired
+    private HttpServletRequest request;
+
+    @Autowired
+    private ResourceLoader resourceLoader;
 
     @PostMapping("/upload-image")
-    public ResponseEntity<?> uploadImage(@RequestParam("image") MultipartFile file) {
-        if (file.isEmpty()) {
-            return ResponseEntity.badRequest().body("No file selected to upload!");
-        }
-
+    public ResponseEntity<String> handleFileUpload(@RequestParam("image") MultipartFile file) {
         try {
-            // Ensure the directory exists
-            File directory = new File(UPLOAD_DIR);
-            if (!directory.exists()) {
-                directory.mkdirs();
+
+            File uploadDir = new File("backend/"+uploadPath);
+            if (!uploadDir.exists()) {
+                uploadDir.mkdirs();
+                
             }
 
-            // Save the file
-            byte[] bytes = file.getBytes();
-            Path path = Paths.get(UPLOAD_DIR + file.getOriginalFilename());
-            Files.write(path, bytes);
+            
+            
 
-            return ResponseEntity.ok("File uploaded successfully!");
+            String projectPath = new File("").getAbsolutePath();
+            String filePath =projectPath+"\\frontend\\public\\images\\"+file.getOriginalFilename();
+            System.out.println(projectPath);
+
+            file.transferTo(new File(filePath));
+            
+            return ResponseEntity.ok("File uploaded successfully");
         } catch (IOException e) {
-            e.printStackTrace();
-            return ResponseEntity.status(500).body("Failed to upload file!");
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("File upload failed");
         }
     }
 }

@@ -54,7 +54,8 @@ function Display({ books, mangas, comics }) {
           {mangas.map((manga, index) => (
             <Link to={`/product/${manga.id}`}>
             <div className="product-card" key={index}>
-            <img src={`/images/${manga.image}`} alt={manga.name} />          
+            <img src={`/images/${manga.image}`} alt={manga.name} /> 
+                
             <div className="product-info">
               <h3>{manga.name}</h3>
               <p>Author: {manga.author}</p>
