@@ -2,10 +2,9 @@ import { useState, useEffect } from 'react';
 import '../App.css';
 import Header from '../components/header/Header';
 import Top from '../components/top/topSell';
-import Display from '../components/display/displayAll';
 import Product from '../models/productModel';
 import Category from '../models/categoryModel';
-import CategoryComp from '../components/category/categoryBook';
+import CategoryComp from '../components/category/categoryComics';
 
 
 function App() {

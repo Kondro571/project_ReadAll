@@ -5,7 +5,7 @@ import { getAuthToken } from "../../services/BackendService"; // Upewnij się, �
 import "./product.css";
 
 function Product({ product }) {
-  const { id, title, author, coverImage, price, categories } = product;
+  const { id, name, author, coverImage, price, categories } = product;
   const [isModalOpen, setIsModalOpen] = useState(false); // Stan do kontroli modalu
   const [modalMessage, setModalMessage] = useState(""); // Stan do przechowywania komunikatu w modalu
   const [isInBasket, setIsInBasket] = useState(false); // Stan do sprawdzania czy produkt jest w koszyku
@@ -94,11 +94,11 @@ function Product({ product }) {
 
       <div className='product-display'>
         <div className="product-image">
-          <img src={`/images/${product.image}` || placeholder} alt={title} />
+          <img src={`/images/${product.image}` || placeholder} alt={name} />
           
         </div>
         <div className="product-info">
-          <h2>{title}</h2>
+          <h2>{name}</h2>
           <p>Author: {author}</p>
           <p>Genre(s): {categories.map(category => category.name).join(', ')}</p> {/* Wyświetlanie kategorii */}
         </div>

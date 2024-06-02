@@ -26,10 +26,10 @@ class Navigation extends React.Component {
                         <a href="/books">Books</a>
                     </li>
                     <li>
-                        <a href="#">Comics</a>
+                        <a href="/comics">Comics</a>
                     </li>
                     <li>
-                        <a href="#">Manga</a>
+                        <a href="/manga">Manga</a>
                     </li>
                 </ol>
             </nav>

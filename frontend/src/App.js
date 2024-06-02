@@ -8,6 +8,9 @@ import Cos1 from './pages/bb';
 import Login from './pages/Login';
 import Registration from './pages/Registration';
 import Books from './pages/Books';
+import Comics from './pages/Comics';
+import Manga from './pages/Manga';
+
 import Basket from './pages/Basket';
 import ProductPage from './pages/Product';
 import Admin from './pages/Admin';
@@ -25,6 +28,9 @@ function App() {
           <Route exact path='/login' element={<Login/>} />
           <Route exact path='/registration' element={<Registration/>} />
           <Route exact path='/books' element={<Books/>} />
+          <Route exact path='/comics' element={<Comics/>} />
+          <Route exact path='/manga' element={<Manga/>} />
+
           <Route exact path='/basket' element={<Basket/>} />
           <Route exact path='/product/:prodId' element={<ProductPage/>} />
 

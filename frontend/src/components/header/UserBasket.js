@@ -54,7 +54,7 @@ function UserMenu() {
                 </a>
                 {isMenuOpen && (
                     <div className="menu-items">
-                        {isAdmin && <a href="#" className="menu-btn btn1">Admin Staff</a>}
+                        {isAdmin && <a href="/admin" className="menu-btn btn1">Admin Staff</a>}
                         {isAuthenticated && <a href="#" className="menu-btn btn2" onClick={handleLogout}>Log out</a>}
                     </div>
                 )}

@@ -5,7 +5,7 @@ import Top from '../components/top/topSell';
 import Display from '../components/display/displayAll';
 import Product from '../models/productModel';
 import Category from '../models/categoryModel';
-import CategoryComp from '../components/category/categoryBook';
+import CategoryComp from '../components/category/categoryManga';
 
 
 function App() {
