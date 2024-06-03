@@ -73,6 +73,13 @@ public class User {
     //     this.status = status;
     // }
     
+    @Override
+    public String toString() {
+        return "User{" +
+                "id=" + id +
+                ", email='" + email + '\'' +
+                '}';
+    }
 }
 
 

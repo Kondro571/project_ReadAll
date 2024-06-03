@@ -2,6 +2,8 @@ package readAll.backend.model;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 
 import jakarta.persistence.*;
+
+import java.io.Serializable;
 import java.time.LocalDateTime;
 import java.util.List;
 
@@ -96,6 +98,18 @@ public class Order {
         this.orderProducts = orderProducts;
     }
 
-    
+    @Override
+    public String toString() {
+        return "Order{" +
+                "id=" + id +
+                ", customer=" + customer +
+                ", totalAmount=" + totalAmount +
+                ", dateTime=" + dateTime +
+                ", status='" + status + '\'' +
+                ", address='" + address + '\'' +
+                ", service='" + service + '\'' +
+                ", orderProducts=" + orderProducts +
+                '}';
+    }
     
 }

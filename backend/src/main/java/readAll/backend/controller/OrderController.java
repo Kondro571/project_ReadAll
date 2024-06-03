@@ -12,6 +12,7 @@ import readAll.backend.model.User;
 import readAll.backend.repository.BasketRepository;
 import readAll.backend.repository.OrderProductRepository;
 import readAll.backend.repository.OrderRepository;
+import readAll.backend.services.OrderProducer;
 import readAll.backend.services.UserService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
@@ -30,6 +31,7 @@ public class OrderController {
     @Autowired
     private OrderRepository orderRepository;
 
+
     @Autowired
     private OrderProductRepository orderProductRepository;
 
@@ -38,6 +40,11 @@ public class OrderController {
 
     @Autowired
     private UserService userService;
+
+    @Autowired
+    private OrderProducer orderProducer;
+
+
 
 
     @GetMapping
@@ -93,6 +100,9 @@ public class OrderController {
         basketRepository.deleteAll(baskets);
 
         savedOrder.setOrderProducts(orderProducts);
+
+        // Wyślij zamówienie do kolejki RabbitMQ
+        orderProducer.sendOrderMessage(savedOrder);
 
         return new ResponseEntity<>(savedOrder, HttpStatus.CREATED);
     }
