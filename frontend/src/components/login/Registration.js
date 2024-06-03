@@ -53,7 +53,7 @@ function RegistrationForm({ messages }) {
         return;
       }
 
-      window.location.href="http://localhost:3000";
+      window.location.href="http://localhost:3000/login";
 
     } catch (error) {
       console.error('Error registering:', error);

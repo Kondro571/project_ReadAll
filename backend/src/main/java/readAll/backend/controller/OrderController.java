@@ -57,6 +57,19 @@ public class OrderController {
         return orderRepository.save(order);
     }
 
+    @DeleteMapping("/{orderId}")
+    public ResponseEntity<Void> deleteOrder(@PathVariable Long orderId) {
+        // Sprawdzamy, czy zamówienie o podanym ID istnieje
+        if (!orderRepository.existsById(orderId)) {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
+
+        // Usuwamy zamówienie
+        orderRepository.deleteById(orderId);
+
+        return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+    }
+
     @GetMapping("/my-orders")
     public ResponseEntity<List<Order>> getMyOrders() {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
@@ -64,6 +77,22 @@ public class OrderController {
         
         List<Order> orders = orderRepository.findByCustomerId(userDto.getId());
         return new ResponseEntity<>(orders, HttpStatus.OK);
+    }
+
+    @DeleteMapping("/my-orders/{orderId}")
+    public ResponseEntity<Void> deleteMyOrder(@PathVariable Long orderId) {
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        UserDto userDto = (UserDto) authentication.getPrincipal();
+
+        Order order = orderRepository.findByIdAndCustomerId(orderId, userDto.getId());
+        if (order == null) {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
+
+        // Usunięcie zamówienia
+        orderRepository.delete(order);
+
+        return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
 
     @PostMapping("/create")
