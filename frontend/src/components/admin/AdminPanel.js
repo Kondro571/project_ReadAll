@@ -7,12 +7,12 @@ function AddProduct() {
     description: '',
     price: '',
     author: '',
-    type: 'Book', // Default value
+    type: 'Book',
     categories: [],
     image: null,
   });
   const [availableCategories, setAvailableCategories] = useState([]);
-  const types = ['Book', 'Manga', 'Comics'];
+  const types = ['Book', 'Manga', 'Comic'];
 
   useEffect(() => {
     // Fetch categories from backend

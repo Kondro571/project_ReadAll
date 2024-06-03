@@ -75,7 +75,6 @@ public class BasketController {
 
     @DeleteMapping("/me/{basketId}")
     public ResponseEntity<Void> deleteBasket(@PathVariable Long basketId) {
-        System.out.println("sssssssssssssssssssssss");
         Basket basket = basketRepository.findById(basketId).orElse(null);
 
         if (basket == null) {

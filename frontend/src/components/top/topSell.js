@@ -30,7 +30,9 @@ function TopBooksThisWeek({ products }) {
         {products.map((product, index) => (
       <Link to={`/product/${product.id}`}>
         <div className="product-card" key={index}>
-              <img src={`/images/${product.image}`} alt={product.name} />   
+              {/* <img src={`/images/${product.image}`} alt={product.name} />  */}
+              <img src={`http://localhost:8080/products/${product.id}/photo`} alt={product.name} /> 
+
               <div className="product-info">
                 <h3>{product.name}</h3>
                 <p>Author: {product.author}</p>

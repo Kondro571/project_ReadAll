@@ -94,7 +94,9 @@ function Product({ product }) {
 
       <div className='product-display'>
         <div className="product-image">
-          <img src={`/images/${product.image}` || placeholder} alt={name} />
+          {/* <img src={`/images/${product.image}` || placeholder} alt={name} /> */}
+          <img src={`http://localhost:8080/products/${product.id}/photo`} alt={product.name} /> 
+          
           
         </div>
         <div className="product-info">

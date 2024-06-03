@@ -33,7 +33,9 @@ function Display({ books, mangas, comics }) {
         {books.map((book, index) => (
         <Link to={`/product/${book.id}`}>
         <div className="product-card" key={index}>
-        <img src={`/images/${book.image}`} alt={book.name} />          
+        {/* <img src={`/images/${book.image}`} alt={book.name} />   */}
+        <img src={`http://localhost:8080/products/${book.id}/photo`} alt={book.name} /> 
+
         <div className="product-info">
             <h3>{book.name}</h3>
             <p>Author: {book.author}</p>
@@ -54,7 +56,8 @@ function Display({ books, mangas, comics }) {
           {mangas.map((manga, index) => (
             <Link to={`/product/${manga.id}`}>
             <div className="product-card" key={index}>
-            <img src={`/images/${manga.image}`} alt={manga.name} /> 
+            {/* <img src={`/images/${manga.image}`} alt={manga.name} />  */}
+            <img src={`http://localhost:8080/products/${manga.id}/photo`} alt={manga.name} /> 
                 
             <div className="product-info">
               <h3>{manga.name}</h3>
@@ -76,7 +79,9 @@ function Display({ books, mangas, comics }) {
             {comics.map((comic, index) => (
               <Link to={`/product/${comic.id}`}>            
               <div className="product-card" key={index}>
-              <img src={`/images/${comic.image}`} alt={comic.name} />          
+              {/* <img src={`/images/${comic.image}`} alt={comic.name} /> */}
+              <img src={`http://localhost:8080/products/${comic.id}/photo`} alt={comic.name} /> 
+
               <div className="product-info">
                 <h3>{comic.name}</h3>
                 <p>Author: {comic.author}</p>

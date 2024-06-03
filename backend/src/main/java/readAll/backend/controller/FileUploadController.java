@@ -35,7 +35,7 @@ public class FileUploadController {
     public ResponseEntity<String> handleFileUpload(@RequestParam("image") MultipartFile file) {
         try {
 
-            File uploadDir = new File("backend/"+uploadPath);
+            File uploadDir = new File("backend/src/main/resources/"+uploadPath);
             if (!uploadDir.exists()) {
                 uploadDir.mkdirs();
                 
@@ -45,7 +45,7 @@ public class FileUploadController {
             
 
             String projectPath = new File("").getAbsolutePath();
-            String filePath =projectPath+"\\frontend\\public\\images\\"+file.getOriginalFilename();
+            String filePath =projectPath+"\\backend\\src\\main\\resources\\public\\images\\"+file.getOriginalFilename();
             System.out.println(projectPath);
 
             file.transferTo(new File(filePath));

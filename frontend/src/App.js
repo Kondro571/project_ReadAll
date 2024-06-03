@@ -16,7 +16,10 @@ import ProductPage from './pages/Product';
 import Admin from './pages/Admin';
 import Profil from './pages/Profile';
 import Filter from './pages/Filter';
+
+import Order from './pages/Order';
 import FilteredProduct from './pages/FilteredProduct';
+
 function App() {
   return (
     <Router>
@@ -33,6 +36,7 @@ function App() {
 
           <Route exact path='/basket' element={<Basket/>} />
           <Route exact path='/product/:prodId' element={<ProductPage/>} />
+          <Route exact path='/order' element={<Order/>} />
 
           <Route exact path='/admin' element={<Admin/>} />
           <Route exact path='/profile' element={<Profil/>} />

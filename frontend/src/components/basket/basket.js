@@ -52,7 +52,9 @@ function CartAndSummary({ basket}) {
       <aside className="cart">
         {basket.map((item, index) => (
           <div className="product" key={index}>
-            <img src={`/images/${item.product.image}` || placeholder} alt={`Product ${index + 1}`} />
+            {/* <img src={`/images/${item.product.image}` || placeholder} alt={`Product ${index + 1}`} /> */}
+            <img src={`http://localhost:8080/products/${item.product.id}/photo` || placeholder} alt={item.product.name} /> 
+
             
             <div className="product-info">
               <h3>{item.product.name}</h3>
