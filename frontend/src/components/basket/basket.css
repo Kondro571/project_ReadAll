@@ -31,7 +31,17 @@
     margin-top: 10px;
 }
 
+.cart .product button{
+    background-color: #770000;
+    color: white;
+    padding: 10px 20px;
+    border-radius: 15px;
+}
+.cart .product button:hover{
+    background-color: #c90000;
+    color: white;
 
+}
 
 /* -----podsumawanie-------------------------- */
 
@@ -80,6 +90,10 @@
     border: none;
     padding: 10px 20px;
     cursor: pointer;
+}
+.basket-summary .checkout-button:hover {
+    background-color: #4d4d4d;
+
 }
 
 

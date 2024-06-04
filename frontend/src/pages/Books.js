@@ -9,7 +9,9 @@ import CategoryComp from '../components/category/categoryBook';
 
 
 function App() {
-  const [products, setProducts] = useState([]);
+  // const [products, setProducts] = useState([]);
+  const [books, setBooks] = useState([]);
+
 
   useEffect(() => {
     fetch('http://localhost:8080/products')
@@ -44,14 +46,17 @@ function App() {
           product.categories = product.categories.map(categoryId => categories.find(category => category.id === categoryId));
         });
 
-        setProducts(fetchedProducts);
+        // setProducts(fetchedProducts);
+        setBooks(fetchedProducts.filter(product => product.type === 'Book'));
+
       })
       .catch(error => console.error('Error fetching data:', error));
   }, []);
+
   return (
     <>
       <Header/>
-      <Top products={products}/>
+      <Top products={books}/>
       <CategoryComp/>
     </>
   );

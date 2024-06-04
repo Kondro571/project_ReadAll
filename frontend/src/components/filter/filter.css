@@ -1,20 +1,171 @@
-.filter {
-    border: 1px solid #ccc;
-    padding: 20px;
+.filter-main{
+  display: flex;
+  padding-top: 130px;
 
-    padding-top: 130px;
-  }
+}
+
+.filter {
+  display: flex;
+  flex-direction: column;
+
+  margin-left: 40px;
+  flex: 1;
+}
+
+
+
+.button-container {
+  display: flex;
+  justify-content: center; /* Wyśrodkowanie przycisku w poziomie */
+
+  border:none;
+  border-radius: 5px;
+  background-color: none;
+
+}
+
+.filter button {
+  background-color: rgb(181, 169, 7);
+  color: aliceblue;
+  border: none;
+  width: 190px;
+  height: 35px;
+  cursor: pointer;
+  transition: background-color 0.3s;
+  margin-bottom: 10px;
+
+
+}
+
+.filter button:hover {
+  background-color: rgb(161, 149, 7); /* Zmiana koloru przycisku po najechaniu */
+}
+
+.type-filter,
+.accordion{
+  background-color: #f9f9f9;
+  border: 1px solid #ccc;
+}
+
+.filter-options {
+  display: flex;
+  flex-direction: column;
+
+
+}
+.filter-options label{
+  margin-bottom: 5px;
+  display: flex;
+  align-items: center;
+  width: 120px;
+
+}
+
+.accordion-header {
+  cursor: pointer;
+  font-size: 16px;
+  margin: 0;
+  padding: 10px;
+  background-color: #f9f9f9;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+}
+
+.accordion-content {
+  display: none;
+}
+
+.accordion-content.show {
+  display: block;
+}
+
+.category-checkboxes{
+  display: flex;
+  flex-wrap: wrap;
   
-  .filter h3, .filter h4 {
-    margin-top: 0;
-  }
   
-  .filter label {
-    display: block;
-    margin-bottom: 10px;
-  }
-  
-  .filter input[type="number"] {
-    width: 100px;
-    margin-right: 10px;
-  }
+}
+.type-checkboxes{
+  display: flex;
+
+  text-align: center;
+
+}
+.category-checkboxes label,
+.type-checkboxes label {
+  margin-bottom: 5px;
+  display: flex;
+  align-items: center;
+}
+
+.category-checkboxes label:hover,
+.type-checkboxes label:hover {
+    background-color: red;
+}
+
+/* Ukryj domyślny wygląd checkboxa */
+input[type="checkbox"] {
+  appearance: none;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  width: 16px;
+  height: 16px;
+  border: 1px solid #ccc;
+  border-radius: 3px;
+  margin-right: 5px;
+}
+
+/* Styluj wygląd klikalnego obszaru checkboxa */
+input[type="checkbox"]:checked::before {
+  content: "✔"; /* Symbol zaznaczonego checkboxa */
+  display: inline-block;
+  width: 16px;
+  height: 16px;
+  text-align: center;
+  line-height: 16px;
+  background-color: #007bff;
+  color: #fff;
+  border-radius: 3px;
+}
+
+
+.price-filter {
+  padding: 15px;
+
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  background-color: #f9f9f9;
+}
+
+.price-filter h4 {
+  margin-top: 0;
+  font-size: 18px;
+  color: #333;
+}
+
+.price-label {
+  padding-left: 50px;
+  display: flex;
+  align-items: center;
+  margin-bottom: 10px;
+}
+
+.price-label input[type="number"] {
+  width: 100px;
+  padding: 5px;
+  margin-left: 10px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  outline: none;
+  transition: border-color 0.3s;
+}
+
+.price-label input[type="number"]:focus {
+  border-color: #007bff;
+}
+
+.price-label span {
+  min-width: 80px;
+  font-size: 14px;
+  color: #555;
+}

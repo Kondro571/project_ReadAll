@@ -35,6 +35,14 @@
     border-radius: 4px;
   }
   
+  .user-info .display-user-info button {
+
+    background-color: #555555;
+    color: white;
+    padding: 10px 20px;
+    border-radius: 15px;
+    cursor: pointer;
+  }
   .user-info form button {
     margin-top: 10px;
     padding: 10px;

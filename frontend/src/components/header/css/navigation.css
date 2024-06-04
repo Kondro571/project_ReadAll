@@ -15,7 +15,7 @@
     list-style-type:none;
     padding:0;
     margin:0;
-    background-color: rgb(139, 144, 251);
+    background-color: rgb(56, 57, 63);
     font-size:18px;
 
     line-height:56px;
@@ -34,13 +34,13 @@
 .category ol > li {
     float:left;
     width:120px;
-    margin-left:10px;
-    background-color: rgb(139, 144, 251);
+    padding-left:10px;
+    background-color: rgb(56, 57, 63);
 
 }
 
 .category ol > li:hover {
-    background-color:#060060;
+    background-color:#602d00;
     
 }
 

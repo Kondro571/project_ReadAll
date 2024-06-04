@@ -15,7 +15,6 @@ function UserMenu() {
 
     useEffect(() => {
         let token = getAuthToken();
-        console.log(token);
 
         if (token !== null) {
             setIsAuthenticated(true); 
@@ -37,8 +36,8 @@ function UserMenu() {
     }
 
     const handleLogout = () => {
-        setAuthHeader(null); // Usunięcie tokena lub wylogowanie użytkownika
-        window.location.href = "/login"; // Przekierowanie do strony logowania
+        setAuthHeader(null); 
+        window.location.href = "/login"; 
     }
 
     return (

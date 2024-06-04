@@ -177,12 +177,14 @@ function UserInfo() {
         </form>
       ) : (
         <>
-          <p><strong>Email:</strong> {userInfo.email}</p>
-          <p><strong>Name:</strong> {userInfo.name}</p>
-          <p><strong>Surname:</strong> {userInfo.surname}</p>
-          <p><strong>Mobile Number:</strong> {userInfo.mobileNumber}</p>
-          <p><strong>Address:</strong> {userInfo.address}</p>
-          <button onClick={() => setIsEditing(true)}>Edit</button>
+          <div class="display-user-info">
+            <p><strong>Email:</strong> {userInfo.email}</p>
+            <p><strong>Name:</strong> {userInfo.name}</p>
+            <p><strong>Surname:</strong> {userInfo.surname}</p>
+            <p><strong>Mobile Number:</strong> {userInfo.mobileNumber}</p>
+            <p><strong>Address:</strong> {userInfo.address}</p>
+            <button onClick={() => setIsEditing(true)}>Edit</button>
+          </div>
         </>
       )}
 

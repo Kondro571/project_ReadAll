@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { getAuthToken } from "../../services/BackendService";
 import './order.css';
 
-function UserInfo() {
+function Order() {
   const [userInfo, setUserInfo] = useState({
     email: '',
     name: '',
@@ -13,6 +13,7 @@ function UserInfo() {
   const [service, setService] = useState('');
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
+  const [formError, setFormError] = useState(''); // Stan dla błędów formularza
 
   useEffect(() => {
     fetchUserData();
@@ -80,8 +81,23 @@ function UserInfo() {
     }));
   };
 
+  const isFormValid = () => {
+    const { name, surname, mobileNumber, address } = userInfo;
+    if (!name || !surname || !mobileNumber || !address || !service) {
+      setFormError('All fields must be filled');
+      return false;
+    }
+    return true;
+  };
+
   const handleFormSubmit = async (e) => {
     e.preventDefault();
+    setFormError('');
+
+    if (!isFormValid()) {
+      return;
+    }
+
     const token = getAuthToken();
 
     const { email, ...userInfoWithoutEmail } = userInfo;
@@ -120,7 +136,9 @@ function UserInfo() {
         throw new Error('Failed to submit order');
       }
 
-      alert('Order submitted successfully');
+      // alert('Order submitted successfully');
+      window.location.href = "http://localhost:3000";
+
     } catch (error) {
       console.error('Error submitting order:', error);
       setError(error.message);
@@ -137,7 +155,8 @@ function UserInfo() {
 
   return (
     <div className="user-info">
-      <h2>User Information</h2>
+      <h2>Order proceed</h2>
+      {formError && <p className="error">{formError}</p>}
       <form onSubmit={handleFormSubmit}>
         <div>
           <label>Email:</label>
@@ -162,6 +181,7 @@ function UserInfo() {
         <div>
           <label>Service:</label>
           <select value={service} onChange={e => setService(e.target.value)}>
+            <option value="">Select a service</option>
             <option value="Standard">Standard</option>
             <option value="Express">Express</option>
           </select>
@@ -172,4 +192,4 @@ function UserInfo() {
   );
 }
 
-export default UserInfo;
+export default Order;

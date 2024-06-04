@@ -1,14 +1,13 @@
 import React, { useState, useEffect } from 'react';
-import './css/header.css'
+import './css/header.css';
 
 import Logo from './Logo';
 import Navigation from './Navigation';
 import SearchBar from './SearchBar';
 import UserMenu from './UserBasket';
 
-import { CustomJwtPayload } from "../../models/CustomJwtPayload";
-import { getAuthToken } from "../../services/BackendService";
-import { jwtDecode } from 'jwt-decode';
+import { getAuthToken, setAuthHeader } from "../../services/BackendService";
+import {jwtDecode } from 'jwt-decode';  // Note the import without destructuring
 
 function Header() {
     const [isMenuOpen, setIsMenuOpen] = useState(false);
@@ -16,35 +15,50 @@ function Header() {
     const [isAdmin, setIsAdmin] = useState(false);
 
     useEffect(() => {
-        let token = getAuthToken();
-        console.log(token);
+        const token = getAuthToken();
 
+        if (token) {
+            const decodedToken = jwtDecode(token);
+            const currentTime = Date.now() / 1000;
+            console.log(currentTime);
+            console.log(decodedToken.exp);
+            if (decodedToken.exp < currentTime) {
 
-        if (token !== null) {
-            setIsAuthenticated(false); 
-
+                handleLogout();
+            } else {
+                setIsAuthenticated(true);
+                if (decodedToken.role === "ADMIN") {
+                    setIsAdmin(true);
+                }
+            }
         } else {
-            setIsAuthenticated(true);
+            setIsAuthenticated(false);
         }
     }, []);
 
+    const handleLogout = () => {
+        setAuthHeader(null); 
+        setIsAuthenticated(false);
+        setIsAdmin(false);
+        window.location.href = '/login'; 
+    };
+
     const toggleMenu = () => {
         setIsMenuOpen(prevState => !prevState);
-    }
+    };
 
     return (
         <header>
             <Logo />
             <Navigation />
             <SearchBar />
-            {isAuthenticated && <a href="login">log in</a>}
-            {!isAuthenticated && <UserMenu />}
-          
+            {isAuthenticated ? <UserMenu /> : <a className="login-link" href="/login">log in</a>}
         </header>
     );
 }
 
 export default Header;
+
 
 
 

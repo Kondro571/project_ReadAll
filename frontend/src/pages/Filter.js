@@ -71,8 +71,10 @@ function App() {
   return (
     <>
       <Header/>
+      <dive className="filter-main">
       <Filter categories={categories} types={types} onFilterChange={handleFilterChange}/>
       <Display products={filteredProducts}/>
+      </dive>
     </>
   );
 }

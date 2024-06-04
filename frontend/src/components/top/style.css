@@ -10,8 +10,8 @@
     margin-top: -30px; 
     padding: 15px 30px;
 
-    background-color: #0629f1;
-    border: 1px solid #0629f1;
+    background-color: #c70202;
+    border: 1px solid #000000;
     font-size: large;
     color: #fff;
     text-shadow: 2px 2px 4px rgba(0, 0, 0, 1); 
@@ -27,7 +27,7 @@
 
     flex-wrap: nowrap; 
     padding: 10px;
-    background-color: rgba(155,220,255);
+    background-color: rgb(56, 56, 56);
     height: 250px;
     padding-left: 150px;
     align-items: center;
@@ -39,20 +39,24 @@
     }
   
   .top-this-week-container .product-card {
-    background-color: aliceblue;
+    background-color: rgb(134, 3, 3);
+    box-shadow: 3px 3px 5px black;
+
+
     width: 300px;
     height: 200px;
     flex: 0 0 auto; 
     margin-right: 40px;
     display: flex; 
     border-radius: 8px;
-
+    color:white;
   }
   
   .top-this-week-container .product-card img {
     margin: 10px;
     width: 130px;
     height: 170px;
+    box-shadow: 2px 2px 5px black;
   }
   
   .top-this-week-container .product-info {
@@ -61,6 +65,12 @@
     flex-direction: column; 
     justify-content: center; 
     margin-left: 10px; 
+  }
+
+  .top-this-week-container .product-info h3{
+    text-shadow: 5px 5px 5px black;
+    font-size: 20px;
+    
   }
 
   .top-this-week-container .nav-button {

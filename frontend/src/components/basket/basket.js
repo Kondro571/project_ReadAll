@@ -5,8 +5,7 @@ import { getAuthToken } from "../../services/BackendService"; // Upewnij się, �
 import "./basket.css"
 
 function CartAndSummary({ basket}) {
-  console.log("tttttt");
-  console.log(basket);
+
   if (basket === null) {
     return <div>Loading...</div>;
   }
@@ -47,6 +46,16 @@ function CartAndSummary({ basket}) {
     return total.toFixed(2);
   };
 
+  const handleCheckout = () => {
+    if (calculateTotal() > 0) {
+      window.location.href="http://localhost:3000/order";
+
+    } else {
+
+      alert("Nie można przejść do płatności, gdy wartość produktów wynosi 0.");
+    }
+  };
+
   return (
     <div className="cart-and-summary">
       <aside className="cart">
@@ -70,7 +79,7 @@ function CartAndSummary({ basket}) {
         <div className="summary-box">
           <h2>Summary</h2>
           <p><span>Product Value:</span> <span className="right">${calculateTotal()}</span></p>
-          <button className="checkout-button">Proceed to Checkout</button>
+          <button className="checkout-button" onClick={handleCheckout}>Proceed to Checkout</button>
         </div>
       </div>
     </div>

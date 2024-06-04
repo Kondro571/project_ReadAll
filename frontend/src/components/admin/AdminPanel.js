@@ -1,5 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import './AdminPanel.css';
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+
 
 function AddProduct() {
   const [product, setProduct] = useState({
@@ -80,7 +83,9 @@ function AddProduct() {
       });
 
       if (response.ok) {
-        alert('Product added successfully');
+        toast.success('Product added successfully!', {
+          position: "top-center" // Corrected here
+        });
         setProduct({
           name: '',
           description: '',
@@ -91,7 +96,9 @@ function AddProduct() {
           image: null,
         });
       } else {
-        alert('Failed to add product');
+        toast.error('Failed to add product to cart', {
+          position: "top-center" // Corrected here
+        });
       }
     } catch (error) {
       console.error('Error:', error);
@@ -123,6 +130,7 @@ function AddProduct() {
         <input type="file" name="image" onChange={handleImageChange} required />
         <button type="submit">Add Product</button>
       </form>
+      <ToastContainer className="custom-toast" /> 
     </div>
   );
 }

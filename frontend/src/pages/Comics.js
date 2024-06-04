@@ -8,7 +8,8 @@ import CategoryComp from '../components/category/categoryComics';
 
 
 function App() {
-  const [products, setProducts] = useState([]);
+
+  const [comics, setComics] = useState([]);
 
   useEffect(() => {
     fetch('http://localhost:8080/products')
@@ -43,14 +44,16 @@ function App() {
           product.categories = product.categories.map(categoryId => categories.find(category => category.id === categoryId));
         });
 
-        setProducts(fetchedProducts);
+
+        setComics(fetchedProducts.filter(product => product.type === 'Comic'));
       })
       .catch(error => console.error('Error fetching data:', error));
   }, []);
+
   return (
     <>
       <Header/>
-      <Top products={products}/>
+      <Top products={comics}/>
       <CategoryComp/>
     </>
   );
