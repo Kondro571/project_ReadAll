@@ -20,7 +20,7 @@ function UserMenu() {
             setIsAuthenticated(true); 
 
             const decoded = jwtDecode(token);
-            console.log(decoded.role);
+
             if (decoded.role === "ADMIN") {
                 setIsAdmin(true); 
             } else {

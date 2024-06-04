@@ -35,7 +35,7 @@ function App() {
       }
 
       const data = await response.json();
-      console.log(data);
+
       setBasket(data); 
     } catch (error) {
       console.error('Error fetching basket data:', error);

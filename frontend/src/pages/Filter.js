@@ -34,7 +34,7 @@ function App() {
           )
         );
   
-        console.log(fetchedProducts);
+
         setProducts(fetchedProducts);
         setFilteredProducts(fetchedProducts);
         setCategories(uniqueCategories);
@@ -49,12 +49,8 @@ function App() {
     const filtered = products.filter(product => {
       const matchesCategory = categories.length === 0 || product.categories.some(c => {
         if (c) {
-          console.log('Category name:', c.name);
           return categories.includes(c.name);
         } else {
-            console.log(product.categories);
-
-          console.log('Undefined category:', c);
           return false;
         }
       });

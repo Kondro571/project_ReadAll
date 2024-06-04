@@ -23,7 +23,7 @@ function CartAndSummary({ basket}) {
           
         }
       });
-      console.log('lalalalal');
+
 
 
       if (response.ok) {

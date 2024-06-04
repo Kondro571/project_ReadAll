@@ -24,7 +24,6 @@ function LoginForm() {
             }
         }).then(data => {
             if (data !== null) {
-                console.log(data["token"]);
                 setAuthHeader(data["token"]);
                 window.location.href="http://localhost:3000";
             } else {

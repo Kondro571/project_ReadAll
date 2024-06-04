@@ -96,11 +96,13 @@
   margin-bottom: 5px;
   display: flex;
   align-items: center;
+  border-radius: 5px;
 }
 
 .category-checkboxes label:hover,
 .type-checkboxes label:hover {
-    background-color: red;
+    background-color: rgb(79, 79, 79);
+    color: white;
 }
 
 /* Ukryj domyślny wygląd checkboxa */

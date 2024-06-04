@@ -19,7 +19,7 @@ function App() {
 
   const category = query.get('category');
   const type = query.get('type');
-  console.log(category, type);
+
   useEffect(() => {
     fetch('http://localhost:8080/products')
       .then(response => response.json())
@@ -40,7 +40,7 @@ function App() {
           )
         );
   
-        console.log(fetchedProducts);
+
         setProducts(fetchedProducts);
         setFilteredProducts(fetchedProducts);
         setCategories(uniqueCategories);

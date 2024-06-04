@@ -153,6 +153,7 @@ function Product({ product }) {
           <p>Author: {author}</p>
           <p>Genre(s): {categories.map(category => category.name).join(', ')}</p>
           <p>Description: {product.description}</p>
+          <p>price: ${price}</p>
           {isAdmin && (
           <button onClick={handleDeleteProduct} className="delete-button">
             Delete Product
@@ -161,6 +162,7 @@ function Product({ product }) {
         </div>
 
       </div>
+      {isAuthenticated &&(
       <div className="product-price">
         <p>price: ${price}</p>
         <button onClick={handleAddToBasket} disabled={isInBasket}>
@@ -168,6 +170,7 @@ function Product({ product }) {
         </button>
         
       </div>
+      )}
       {isModalOpen && (
         <div className="modal">
           <div className="modal-content">
