@@ -171,3 +171,16 @@ input[type="checkbox"]:checked::before {
   font-size: 14px;
   color: #555;
 }
+
+
+@media only screen and (max-width: 705px) {
+
+  .filter-main{
+    display: block;
+    padding-top: 130px;
+  
+  }
+
+
+
+}

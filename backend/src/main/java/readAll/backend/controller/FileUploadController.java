@@ -46,7 +46,7 @@ public class FileUploadController {
 
             String projectPath = new File("").getAbsolutePath();
             String filePath =projectPath+"\\backend\\src\\main\\resources\\public\\images\\"+file.getOriginalFilename();
-            System.out.println(projectPath);
+            // System.out.println(projectPath);
 
             file.transferTo(new File(filePath));
             

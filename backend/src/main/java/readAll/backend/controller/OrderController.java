@@ -131,7 +131,7 @@ public class OrderController {
         savedOrder.setOrderProducts(orderProducts);
 
         // Wyślij zamówienie do kolejki RabbitMQ
-        orderProducer.sendOrderMessage(savedOrder);
+        // orderProducer.sendOrderMessage(savedOrder);
 
         return new ResponseEntity<>(savedOrder, HttpStatus.CREATED);
     }
