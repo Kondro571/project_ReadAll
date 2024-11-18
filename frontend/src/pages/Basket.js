@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from 'react';
-import '../App.css';
 import Header from '../components/header/Header';
 import BasketComp from '../components/basket/basket';
 import Product from '../models/productModel';

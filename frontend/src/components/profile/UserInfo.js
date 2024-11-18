@@ -1,8 +1,91 @@
 import React, { useState, useEffect } from 'react';
 import { getAuthToken } from "../../services/BackendService";
-import './UserInfo.css';
+import { createUseStyles } from 'react-jss';
+
+const useStyles = createUseStyles({
+  userInfo: {
+    maxWidth: "800px",
+    margin: "0 auto",
+    padding: "20px",
+    paddingTop: "130px",
+    border: "1px solid #ddd",
+    borderRadius: "8px",
+    backgroundColor: "#f9f9f9",
+  },
+  header: {
+    textAlign: "center",
+    marginBottom: "20px",
+  },
+  form: {
+    display: "grid",
+    gridTemplateColumns: "1fr 1fr",
+    gap: "10px",
+    "& div": {
+      display: "flex",
+      flexDirection: "column",
+    },
+    "& label": {
+      marginBottom: "5px",
+      fontWeight: "bold",
+    },
+    "& input": {
+      padding: "8px",
+      border: "1px solid #ccc",
+      borderRadius: "4px",
+    },
+    "& button": {
+      marginTop: "10px",
+      padding: "10px",
+      border: "none",
+      borderRadius: "4px",
+      cursor: "pointer",
+    },
+    "& button[type='submit']": {
+      backgroundColor: "#4CAF50",
+      color: "white",
+    },
+    "& button[type='button']": {
+      backgroundColor: "#f44336",
+      color: "white",
+    },
+  },
+  displayUserInfo: {
+    "& p": {
+      margin: "10px 0",
+    },
+    "& button": {
+      backgroundColor: "#555555",
+      color: "white",
+      padding: "10px 20px",
+      borderRadius: "15px",
+      cursor: "pointer",
+    },
+  },
+  ordersList: {
+    listStyleType: "none",
+    padding: "0",
+  },
+  orderItem: {
+    marginBottom: "20px",
+    padding: "15px",
+    border: "1px solid #ddd",
+    borderRadius: "8px",
+    backgroundColor: "#fff",
+    "& p": {
+      margin: "5px 0",
+    },
+    "& ul": {
+      listStyleType: "none",
+      padding: "0",
+    },
+    "& ul li": {
+      margin: "5px 0",
+    },
+  },
+});
 
 function UserInfo() {
+  const classes = useStyles();
   const [userInfo, setUserInfo] = useState({
     email: '',
     name: '',
@@ -45,7 +128,7 @@ function UserInfo() {
         email: userData.email
       }));
 
-      const userInfoResponse = await fetch('http://localhost:8080/user-info/me', {
+      const userInfoResponse = await fetch('http://localhost:8080/profile', {
         method: 'GET',
         headers: {
           'Content-Type': 'application/json',
@@ -110,12 +193,10 @@ function UserInfo() {
   const handleFormSubmit = async (e) => {
     e.preventDefault();
     const token = getAuthToken();
-
-    // Usuń email z obiektu userInfo przed wysłaniem na backend
     const { email, ...userInfoWithoutEmail } = userInfo;
 
     try {
-      const response = await fetch('http://localhost:8080/user-info/me', {
+      const response = await fetch('http://localhost:8080/profile', {
         method: 'PUT',
         headers: {
           'Content-Type': 'application/json',
@@ -145,10 +226,10 @@ function UserInfo() {
   }
 
   return (
-    <div className="user-info">
-      <h2>User Information</h2>
+    <div className={classes.userInfo}>
+      <h2 className={classes.header}>User Information</h2>
       {isEditing ? (
-        <form onSubmit={handleFormSubmit}>
+        <form className={classes.form} onSubmit={handleFormSubmit}>
           <div>
             <label>Email:</label>
             <input type="email" name="email" value={userInfo.email} readOnly />
@@ -171,28 +252,25 @@ function UserInfo() {
           </div>
           <div>
             
-          </div>
-          <button type="submit">Save</button>
+          </div>          <button type="submit">Save</button>
           <button type="button" onClick={() => setIsEditing(false)}>Cancel</button>
         </form>
       ) : (
-        <>
-          <div class="display-user-info">
-            <p><strong>Email:</strong> {userInfo.email}</p>
-            <p><strong>Name:</strong> {userInfo.name}</p>
-            <p><strong>Surname:</strong> {userInfo.surname}</p>
-            <p><strong>Mobile Number:</strong> {userInfo.mobileNumber}</p>
-            <p><strong>Address:</strong> {userInfo.address}</p>
-            <button onClick={() => setIsEditing(true)}>Edit</button>
-          </div>
-        </>
+        <div className={classes.displayUserInfo}>
+          <p><strong>Email:</strong> {userInfo.email}</p>
+          <p><strong>Name:</strong> {userInfo.name}</p>
+          <p><strong>Surname:</strong> {userInfo.surname}</p>
+          <p><strong>Mobile Number:</strong> {userInfo.mobileNumber}</p>
+          <p><strong>Address:</strong> {userInfo.address}</p>
+          <button onClick={() => setIsEditing(true)}>Edit</button>
+        </div>
       )}
 
-      <h2>Orders</h2>
+      <h2 className={classes.header}>Orders</h2>
       {orders.length > 0 ? (
-        <ul className="orders-list">
+        <ul className={classes.ordersList}>
           {orders.map(order => (
-            <li key={order.id} className="order-item">
+            <li key={order.id} className={classes.orderItem}>
               <p><strong>Order ID:</strong> {order.id}</p>
               <p><strong>Total Amount:</strong> ${order.totalAmount}</p>
               <p><strong>Date:</strong> {new Date(order.dateTime).toLocaleString()}</p>

@@ -1,14 +1,19 @@
 import React, { useEffect, useState } from 'react';
-import { useLocation } from 'react-router-dom';
+import { createUseStyles } from 'react-jss'; // Import react-jss
 import Display from './display';
-import "./filteredProduct.css";
 
-function FilteredProducts({ products,category,type }) {
+// Tworzymy style za pomocą react-jss
+const useStyles = createUseStyles({
+  filteredProduct: {
+    paddingTop: 130,
+  },
+});
+
+function FilteredProducts({ products, category, type }) {
   const [filteredProducts, setFilteredProducts] = useState([]);
+  const classes = useStyles(); // Hook do stylów
 
   useEffect(() => {
-
-
     const filtered = products.filter(product => {
       const matchesCategory = product.categories.some(c => c && c.name === category);
       const matchesType = product.type === type;
@@ -16,10 +21,10 @@ function FilteredProducts({ products,category,type }) {
     });
 
     setFilteredProducts(filtered);
-  }, [products]);
+  }, [products, category, type]); // Zmienione: teraz uwzględnia także category i type w zależności
 
   return (
-    <div className='filtered-product'>
+    <div className={classes.filteredProduct}>
       <h2>Filtered Products</h2>
       <Display products={filteredProducts} />
     </div>

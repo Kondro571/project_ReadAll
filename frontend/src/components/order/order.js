@@ -1,8 +1,68 @@
 import React, { useState, useEffect } from 'react';
 import { getAuthToken } from "../../services/BackendService";
-import './order.css';
+import { createUseStyles } from 'react-jss';
 
-function Order() {
+const useStyles = createUseStyles({
+  userInfo: {
+    maxWidth: 800,
+    margin: '0 auto',
+    padding: 20,
+    paddingTop: 130,
+    border: '1px solid #ddd',
+    borderRadius: 8,
+    backgroundColor: '#f9f9f9',
+  },
+  header: {
+    textAlign: 'center',
+    marginBottom: 20,
+  },
+  form: {
+    display: 'grid',
+    gridTemplateColumns: '1fr 1fr',
+    gap: 10,
+  },
+  formGroup: {
+    display: 'flex',
+    flexDirection: 'column',
+  },
+  label: {
+    marginBottom: 5,
+    fontWeight: 'bold',
+  },
+  input: {
+    padding: 8,
+    border: '1px solid #ccc',
+    borderRadius: 4,
+  },
+  buttonSubmit: {
+    marginTop: 10,
+    padding: 10,
+    border: 'none',
+    borderRadius: 4,
+    cursor: 'pointer',
+    backgroundColor: '#4CAF50',
+    color: 'white',
+    '&:hover': {
+      backgroundColor: '#45a049',
+    },
+  },
+  buttonCancel: {
+    backgroundColor: '#f44336',
+    color: 'white',
+    '&:hover': {
+      backgroundColor: '#e53935',
+    },
+  },
+  error: {
+    color: 'red',
+    fontSize: '0.9em',
+    marginTop: -10,
+  },
+});
+
+const Order = () => {
+  const classes = useStyles();
+
   const [userInfo, setUserInfo] = useState({
     email: '',
     name: '',
@@ -13,7 +73,7 @@ function Order() {
   const [service, setService] = useState('');
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
-  const [formError, setFormError] = useState(''); // Stan dla błędów formularza
+  const [formError, setFormError] = useState('');
 
   useEffect(() => {
     fetchUserData();
@@ -26,7 +86,6 @@ function Order() {
         throw new Error('JWT token not found');
       }
 
-      // Fetch user data
       const userResponse = await fetch('http://localhost:8080/users/me', {
         method: 'GET',
         headers: {
@@ -44,26 +103,6 @@ function Order() {
         ...prevState,
         email: userData.email
       }));
-
-      // Fetch user info
-      const userInfoResponse = await fetch('http://localhost:8080/user-info/me', {
-        method: 'GET',
-        headers: {
-          'Content-Type': 'application/json',
-          'Authorization': `Bearer ${token}`
-        }
-      });
-
-      if (userInfoResponse.ok) {
-        const userInfoData = await userInfoResponse.json();
-        setUserInfo(prevState => ({
-          ...prevState,
-          name: userInfoData.name || '',
-          surname: userInfoData.surname || '',
-          mobileNumber: userInfoData.mobileNumber || '',
-          address: userInfoData.address || ''
-        }));
-      }
 
       setLoading(false);
     } catch (error) {
@@ -100,24 +139,20 @@ function Order() {
 
     const token = getAuthToken();
 
-    const { email, ...userInfoWithoutEmail } = userInfo;
-
     try {
-      // Update user info
-      const userInfoResponse = await fetch('http://localhost:8080/user-info/me', {
+      const userInfoResponse = await fetch('http://localhost:8080/profile', {
         method: 'PUT',
         headers: {
           'Content-Type': 'application/json',
           'Authorization': `Bearer ${token}`
         },
-        body: JSON.stringify(userInfoWithoutEmail)
+        body: JSON.stringify(userInfo)
       });
 
       if (!userInfoResponse.ok) {
         throw new Error('Failed to update user information');
       }
 
-      // Submit order
       const orderData = {
         address: userInfo.address,
         service
@@ -136,9 +171,7 @@ function Order() {
         throw new Error('Failed to submit order');
       }
 
-      // alert('Order submitted successfully');
       window.location.href = "http://localhost:3000";
-
     } catch (error) {
       console.error('Error submitting order:', error);
       setError(error.message);
@@ -154,42 +187,42 @@ function Order() {
   }
 
   return (
-    <div className="user-info">
-      <h2>Order proceed</h2>
-      {formError && <p className="error">{formError}</p>}
-      <form onSubmit={handleFormSubmit}>
-        <div>
-          <label>Email:</label>
-          <input type="email" name="email" value={userInfo.email} readOnly />
+    <div className={classes.userInfo}>
+      <h2 className={classes.header}>Order Proceed</h2>
+      {formError && <p className={classes.error}>{formError}</p>}
+      <form onSubmit={handleFormSubmit} className={classes.form}>
+        <div className={classes.formGroup}>
+          <label className={classes.label}>Email:</label>
+          <input type="email" name="email" value={userInfo.email} readOnly className={classes.input} />
         </div>
-        <div>
-          <label>Name:</label>
-          <input type="text" name="name" value={userInfo.name} onChange={handleInputChange} />
+        <div className={classes.formGroup}>
+          <label className={classes.label}>Name:</label>
+          <input type="text" name="name" value={userInfo.name} onChange={handleInputChange} className={classes.input} />
         </div>
-        <div>
-          <label>Surname:</label>
-          <input type="text" name="surname" value={userInfo.surname} onChange={handleInputChange} />
+        <div className={classes.formGroup}>
+          <label className={classes.label}>Surname:</label>
+          <input type="text" name="surname" value={userInfo.surname} onChange={handleInputChange} className={classes.input} />
         </div>
-        <div>
-          <label>Mobile Number:</label>
-          <input type="text" name="mobileNumber" value={userInfo.mobileNumber} onChange={handleInputChange} />
+        <div className={classes.formGroup}>
+          <label className={classes.label}>Mobile Number:</label>
+          <input type="text" name="mobileNumber" value={userInfo.mobileNumber} onChange={handleInputChange} className={classes.input} />
         </div>
-        <div>
-          <label>Address:</label>
-          <input type="text" name="address" value={userInfo.address} onChange={handleInputChange} />
+        <div className={classes.formGroup}>
+          <label className={classes.label}>Address:</label>
+          <input type="text" name="address" value={userInfo.address} onChange={handleInputChange} className={classes.input} />
         </div>
-        <div>
-          <label>Service:</label>
-          <select value={service} onChange={e => setService(e.target.value)}>
+        <div className={classes.formGroup}>
+          <label className={classes.label}>Service:</label>
+          <select value={service} onChange={e => setService(e.target.value)} className={classes.input}>
             <option value="">Select a service</option>
             <option value="Standard">Standard</option>
             <option value="Express">Express</option>
           </select>
         </div>
-        <button type="submit">Submit Order</button>
+        <button type="submit" className={classes.buttonSubmit}>Submit Order</button>
       </form>
     </div>
   );
-}
+};
 
 export default Order;

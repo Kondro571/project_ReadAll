@@ -1,10 +1,57 @@
 import React, { useState, useEffect } from 'react';
-import './AdminPanel.css';
+import { createUseStyles } from 'react-jss';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 
+const useStyles = createUseStyles({
+  addProduct: {
+    margin: 'auto',
+    padding: 20,
+    border: '1px solid #ccc',
+    borderRadius: 8,
+    maxWidth: 400,
+    backgroundColor: '#f9f9f9',
+    paddingTop: 130,
+  },
+  title: {
+    marginBottom: 20,
+  },
+  form: {
+    display: 'flex',
+    flexDirection: 'column',
+  },
+  input: {
+    marginBottom: 10,
+    padding: 8,
+    fontSize: 16,
+    '&::file-selector-button': {
+      fontWeight: 'bold',
+      color: 'rgb(175, 3, 3)',
+      padding: 7,
+      border: 'thin solid grey',
+      borderRadius: 3,
+    },
+  },
+  button: {
+    padding: 10,
+    fontSize: 16,
+    backgroundColor: '#840101',
+    color: 'white',
+    border: 'none',
+    borderRadius: 4,
+    cursor: 'pointer',
+    '&:hover': {
+      backgroundColor: '#863909ae',
+    },
+  },
+  toast: {
+    fontSize: '14px !important',
+  },
+});
 
 function AddProduct() {
+  const classes = useStyles();
+
   const [product, setProduct] = useState({
     name: '',
     description: '',
@@ -14,15 +61,15 @@ function AddProduct() {
     categories: [],
     image: null,
   });
+
   const [availableCategories, setAvailableCategories] = useState([]);
   const types = ['Book', 'Manga', 'Comic'];
 
   useEffect(() => {
-    // Fetch categories from backend
     fetch('http://localhost:8080/categories')
-      .then(response => response.json())
-      .then(data => setAvailableCategories(data))
-      .catch(error => console.error('Error fetching categories:', error));
+      .then((response) => response.json())
+      .then((data) => setAvailableCategories(data))
+      .catch((error) => console.error('Error fetching categories:', error));
   }, []);
 
   const handleChange = (e) => {
@@ -34,7 +81,10 @@ function AddProduct() {
   };
 
   const handleCategoryChange = (e) => {
-    const selectedCategories = Array.from(e.target.selectedOptions, option => option.value);
+    const selectedCategories = Array.from(
+      e.target.selectedOptions,
+      (option) => option.value
+    );
     setProduct((prevProduct) => ({
       ...prevProduct,
       categories: selectedCategories,
@@ -50,22 +100,20 @@ function AddProduct() {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    
-    // Save the image file
+
     const formData = new FormData();
     formData.append('image', product.image);
 
     try {
-        const imageResponse = await fetch('http://localhost:8080/upload-image', {
-          method: 'POST',
-          body: formData,
-        });
-  
-        if (!imageResponse.ok) {
-          throw new Error('Image upload failed');
-        }
+      const imageResponse = await fetch('http://localhost:8080/upload-image', {
+        method: 'POST',
+        body: formData,
+      });
 
-      // Handle product data submission to backend
+      if (!imageResponse.ok) {
+        throw new Error('Image upload failed');
+      }
+
       const response = await fetch('http://localhost:8080/products', {
         method: 'POST',
         headers: {
@@ -78,13 +126,13 @@ function AddProduct() {
           author: product.author,
           type: product.type,
           categories: product.categories,
-          image: product.image.name, // Save only the image name
+          image: product.image.name,
         }),
       });
 
       if (response.ok) {
         toast.success('Product added successfully!', {
-          position: "top-center" // Corrected here
+          position: 'top-center',
         });
         setProduct({
           name: '',
@@ -96,41 +144,97 @@ function AddProduct() {
           image: null,
         });
       } else {
-        toast.error('Failed to add product to cart', {
-          position: "top-center" // Corrected here
+        toast.error('Failed to add product', {
+          position: 'top-center',
         });
       }
     } catch (error) {
       console.error('Error:', error);
-      alert('Error adding product');
+      toast.error('Error adding product', {
+        position: 'top-center',
+      });
     }
   };
 
   return (
-    <div className="add-product">
-      <h2>Add New Product</h2>
-      <form onSubmit={handleSubmit}>
-        <input type="text" name="name" placeholder="Name" value={product.name} onChange={handleChange} required />
-        <input type="text" name="description" placeholder="Description" value={product.description} onChange={handleChange} required />
-        <input type="number" name="price" placeholder="Price" value={product.price} onChange={handleChange} required />
-        <input type="text" name="author" placeholder="Author" value={product.author} onChange={handleChange} required />
-        
-        <select name="type" value={product.type} onChange={handleChange} required>
-          {types.map(type => (
-            <option key={type} value={type}>{type}</option>
+    <div className={classes.addProduct}>
+      <h2 className={classes.title}>Add New Product</h2>
+      <form className={classes.form} onSubmit={handleSubmit}>
+        <input
+          type="text"
+          name="name"
+          placeholder="Name"
+          value={product.name}
+          onChange={handleChange}
+          required
+          className={classes.input}
+        />
+        <input
+          type="text"
+          name="description"
+          placeholder="Description"
+          value={product.description}
+          onChange={handleChange}
+          required
+          className={classes.input}
+        />
+        <input
+          type="number"
+          name="price"
+          placeholder="Price"
+          value={product.price}
+          onChange={handleChange}
+          required
+          className={classes.input}
+        />
+        <input
+          type="text"
+          name="author"
+          placeholder="Author"
+          value={product.author}
+          onChange={handleChange}
+          required
+          className={classes.input}
+        />
+        <select
+          name="type"
+          value={product.type}
+          onChange={handleChange}
+          required
+          className={classes.input}
+        >
+          {types.map((type) => (
+            <option key={type} value={type}>
+              {type}
+            </option>
           ))}
         </select>
-
-        <select name="categories" multiple value={product.categories} onChange={handleCategoryChange} required>
-          {availableCategories.map(category => (
-            <option key={category.id} value={category.name}>{category.name}</option>
+        <select
+          name="categories"
+          multiple
+          value={product.categories}
+          onChange={handleCategoryChange}
+          required
+          className={classes.input}
+        >
+          {availableCategories.map((category) => (
+            <option key={category.id} value={category.name}>
+              {category.name}
+            </option>
           ))}
         </select>
-
-        <input type="file" name="image" onChange={handleImageChange} required />
-        <button type="submit">Add Product</button>
+        <input
+          type="file"
+          name="image"
+          onChange={handleImageChange}
+          required
+          className={classes.input}
+        />
+        <button type="submit" className={classes.button}>
+          Add Product
+        </button>
       </form>
-      <ToastContainer className="custom-toast" /> 
+      <ToastContainer className={classes.toast} />
     </div>
   );
 }

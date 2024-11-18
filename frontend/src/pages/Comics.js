@@ -1,5 +1,4 @@
 import { useState, useEffect } from 'react';
-import '../App.css';
 import Header from '../components/header/Header';
 import Top from '../components/top/topSell';
 import Product from '../models/productModel';

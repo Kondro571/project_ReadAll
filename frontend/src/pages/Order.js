@@ -1,4 +1,3 @@
-import '../App.css';
 import Order from '../components/order/order'
 import Header from '../components/header/Header';
 
