@@ -26,14 +26,25 @@ import org.springframework.stereotype.Service;
 import java.nio.CharBuffer;
 import java.util.Optional;
 
+import org.springframework.security.core.Authentication;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.web.bind.annotation.*;
+
+import jakarta.persistence.EntityManager;
+import jakarta.persistence.PersistenceContext;
+import jakarta.persistence.Query;
+
+
+
+import java.util.List;
 @RequiredArgsConstructor
 @Service
 public class UserService {
 
     private final UserRepository userRepository;
-
     private final PasswordEncoder passwordEncoder;
-
     private final UserMapper userMapper;
 
     public UserDto login(CredentialsDto credentialsDto) {
@@ -47,9 +58,7 @@ public class UserService {
     }
 
     public UserDto register(SignUpDto userDto) {
-        Optional<User> optionalUser = userRepository.findByEmail(userDto.getEmail());
-
-        if (optionalUser.isPresent()) {
+        if (doesUserExistByEmail(userDto.getEmail())) {
             throw new AppException("Login already exists", HttpStatus.BAD_REQUEST);
         }
 
@@ -69,7 +78,37 @@ public class UserService {
     }
 
     public User findById(Long id) {
-        return userRepository.findById(id).orElseThrow(() -> new RuntimeException("User not found"));
+        return userRepository.findById(id)
+                .orElseThrow(() -> new AppException("User not found with ID: " + id, HttpStatus.NOT_FOUND));
     }
 
+
+
+
+    public List<User> getAllUsers() {
+        return userRepository.findAll();
+    }
+
+    public boolean doesUserExistByEmail(String email) {
+        return userRepository.existsByEmail(email);
+    }
+
+    public UserDto getCurrentUser(Authentication authentication) {
+        if (authentication == null || !authentication.isAuthenticated()) {
+            throw new AppException("User not authenticated", HttpStatus.UNAUTHORIZED);
+        }
+        return (UserDto) authentication.getPrincipal();
+    }
+
+    public UserDto createUser(User user) {
+        if (doesUserExistByEmail(user.getEmail())) {
+            throw new AppException("User with this email already exists", HttpStatus.BAD_REQUEST);
+        }
+
+        user.setPassword(passwordEncoder.encode(user.getPassword()));
+        user.setRole(Role.USER);
+
+        User savedUser = userRepository.save(user);
+        return userMapper.toUserDto(savedUser);
+    }
 }
