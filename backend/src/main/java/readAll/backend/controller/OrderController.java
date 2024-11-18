@@ -4,25 +4,20 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import readAll.backend.dtos.OrderDto;
+import readAll.backend.dtos.OrderResponseDto;
 import readAll.backend.dtos.UserDto;
-import readAll.backend.model.Basket;
+
 import readAll.backend.model.Order;
-import readAll.backend.model.OrderProduct;
-import readAll.backend.model.User;
-import readAll.backend.repository.BasketRepository;
-import readAll.backend.repository.OrderProductRepository;
-import readAll.backend.repository.OrderRepository;
-import readAll.backend.services.OrderProducer;
+
 import readAll.backend.services.OrderService;
-import readAll.backend.services.UserService;
+
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.http.HttpStatus;
 
-import java.time.LocalDateTime;
+
 import java.util.List;
-import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping("/orders")
@@ -50,13 +45,42 @@ public class OrderController {
     }
 
     @PostMapping("/create")
-    public ResponseEntity<Order> createOrder(@RequestBody OrderDto orderDto) {
+    public ResponseEntity<OrderResponseDto> createOrder(@RequestBody OrderDto orderDto) {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         UserDto userDto = (UserDto) authentication.getPrincipal();
 
-        Order savedOrder = orderService.createOrder(userDto.getId(), orderDto);
-        return new ResponseEntity<>(savedOrder, HttpStatus.CREATED);
+        OrderResponseDto responseDto = orderService.createOrder(userDto.getId(), orderDto);
+        return new ResponseEntity<>(responseDto, HttpStatus.CREATED);
     }
+
+    @PostMapping("/{orderId}/retry-payment")
+    public ResponseEntity<String> retryPayment(@PathVariable Long orderId) {
+        String redirectUri = orderService.repeatPayment(orderId);
+        return ResponseEntity.ok(redirectUri);
+    }
+
+
+
+
+    @GetMapping("/verify-payment/{orderId}")
+    public ResponseEntity<String> verifyPaymentForOrder(@PathVariable Long orderId) {
+        try {
+            String result = orderService.verifyPaymentForOrder(orderId);
+
+            if ("Order has been paid successfully".equals(result)) {
+                return ResponseEntity.ok(result);
+            } else {
+                return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(result);
+            }
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
+                    .body("Error verifying payment: " + e.getMessage());
+        }
+    }
+
+
+
+
 
     @DeleteMapping("/my-orders/{orderId}")
     public ResponseEntity<Void> deleteMyOrder(@PathVariable Long orderId) {
@@ -66,4 +90,7 @@ public class OrderController {
         orderService.deleteOrder(orderId, userDto.getId());
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
+
+
+
 }

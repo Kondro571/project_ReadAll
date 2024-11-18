@@ -73,7 +73,7 @@ const Order = () => {
   const [service, setService] = useState('');
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
-  const [formError, setFormError] = useState('');
+  const [formError, setFormError] = useState(''); // Stan dla błędów formularza
 
   useEffect(() => {
     fetchUserData();
@@ -86,6 +86,7 @@ const Order = () => {
         throw new Error('JWT token not found');
       }
 
+      // Fetch user data
       const userResponse = await fetch('http://localhost:8080/users/me', {
         method: 'GET',
         headers: {
@@ -103,6 +104,26 @@ const Order = () => {
         ...prevState,
         email: userData.email
       }));
+
+      // Fetch user info
+      const userInfoResponse = await fetch('http://localhost:8080/profile', {
+        method: 'GET',
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': `Bearer ${token}`
+        }
+      });
+
+      if (userInfoResponse.ok) {
+        const userInfoData = await userInfoResponse.json();
+        setUserInfo(prevState => ({
+          ...prevState,
+          name: userInfoData.name || '',
+          surname: userInfoData.surname || '',
+          mobileNumber: userInfoData.mobileNumber || '',
+          address: userInfoData.address || ''
+        }));
+      }
 
       setLoading(false);
     } catch (error) {
@@ -132,32 +153,36 @@ const Order = () => {
   const handleFormSubmit = async (e) => {
     e.preventDefault();
     setFormError('');
-
+  
     if (!isFormValid()) {
       return;
     }
-
+  
     const token = getAuthToken();
-
+  
+    const { email, ...userInfoWithoutEmail } = userInfo;
+  
     try {
+      // Update user info
       const userInfoResponse = await fetch('http://localhost:8080/profile', {
         method: 'PUT',
         headers: {
           'Content-Type': 'application/json',
           'Authorization': `Bearer ${token}`
         },
-        body: JSON.stringify(userInfo)
+        body: JSON.stringify(userInfoWithoutEmail)
       });
-
+  
       if (!userInfoResponse.ok) {
         throw new Error('Failed to update user information');
       }
-
+  
+      // Submit order
       const orderData = {
         address: userInfo.address,
         service
       };
-
+  
       const orderResponse = await fetch('http://localhost:8080/orders/create', {
         method: 'POST',
         headers: {
@@ -166,17 +191,25 @@ const Order = () => {
         },
         body: JSON.stringify(orderData)
       });
-
+  
       if (!orderResponse.ok) {
         throw new Error('Failed to submit order');
       }
-
-      window.location.href = "http://localhost:3000";
+  
+      const responseData = await orderResponse.json();
+  
+      if (responseData.redirectUri) {
+        // Przekierowanie na `redirectUri`
+        window.location.href = responseData.redirectUri;
+      } else {
+        throw new Error('No redirect URI provided');
+      }
     } catch (error) {
       console.error('Error submitting order:', error);
       setError(error.message);
     }
   };
+  
 
   if (loading) {
     return <div>Loading...</div>;

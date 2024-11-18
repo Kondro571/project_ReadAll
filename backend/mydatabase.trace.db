@@ -1170,3 +1170,19 @@ Caused by: org.h2.mvstore.MVStoreException: The file is locked: C:/Users/konra/D
 	at org.h2.mvstore.SingleFileStore.open(SingleFileStore.java:81)
 	at org.h2.mvstore.MVStore.<init>(MVStore.java:286)
 	... 59 more
+2024-11-18 18:27:00.486281+01:00 jdbc[4]: exception
+org.h2.jdbc.JdbcSQLDataException: Wartość za długa dla kolumny "RESPONSE CHARACTER VARYING(255)": "'{status={statusCode=SUCCESS}, redirectUri=https://merch-prod.snd.payu.com/pay/?... (547)"
+Value too long for column "RESPONSE CHARACTER VARYING(255)": "'{status={statusCode=SUCCESS}, redirectUri=https://merch-prod.snd.payu.com/pay/?... (547)"; SQL statement:
+insert into transaction (amount,date_time,order_id,response,status,transaction_id) values (?,?,?,?,?,?) [22001-224]
+2024-11-18 18:54:07.812505+01:00 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLDataException: Wartość za długa dla kolumny "RESPONSE CHARACTER VARYING(255)": "'{status={statusCode=SUCCESS}, redirectUri=https://merch-prod.snd.payu.com/pay/?... (547)"
+Value too long for column "RESPONSE CHARACTER VARYING(255)": "'{status={statusCode=SUCCESS}, redirectUri=https://merch-prod.snd.payu.com/pay/?... (547)"; SQL statement:
+insert into transaction (amount,date_time,order_id,response,status,transaction_id) values (?,?,?,?,?,?) [22001-224]
+2024-11-18 19:32:52.167661+01:00 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLDataException: Wartość za długa dla kolumny "RESPONSE CHARACTER VARYING(255)": "'{status={statusCode=SUCCESS}, redirectUri=https://merch-prod.snd.payu.com/pay/?... (547)"
+Value too long for column "RESPONSE CHARACTER VARYING(255)": "'{status={statusCode=SUCCESS}, redirectUri=https://merch-prod.snd.payu.com/pay/?... (547)"; SQL statement:
+insert into transaction (amount,date_time,order_id,response,status,transaction_id) values (?,?,?,?,?,?) [22001-224]
+2024-11-18 19:37:33.266052+01:00 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLDataException: Wartość za długa dla kolumny "RESPONSE CHARACTER VARYING(255)": "'{status={statusCode=SUCCESS}, redirectUri=https://merch-prod.snd.payu.com/pay/?... (547)"
+Value too long for column "RESPONSE CHARACTER VARYING(255)": "'{status={statusCode=SUCCESS}, redirectUri=https://merch-prod.snd.payu.com/pay/?... (547)"; SQL statement:
+insert into transaction (amount,date_time,order_id,response,status,transaction_id) values (?,?,?,?,?,?) [22001-224]
