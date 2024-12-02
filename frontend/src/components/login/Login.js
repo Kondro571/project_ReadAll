@@ -153,7 +153,7 @@ function LoginForm() {
           <button type="submit" className={classes.confirmButton}>
             Login
           </button>
-          <a href="login" className={classes.link}>
+          <a href="forgot-password" className={classes.link}>
             Forget password?
           </a>
           <a href="registration" className={classes.createAccountButton}>

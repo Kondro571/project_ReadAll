@@ -13,6 +13,7 @@ import readAll.backend.repository.OrderProductRepository;
 import readAll.backend.repository.OrderRepository;
 import readAll.backend.repository.TransactionRepository;
 
+import java.nio.file.AccessDeniedException;
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -51,6 +52,18 @@ public class OrderService {
 
     public List<Order> getUserOrders(Long userId) {
         return orderRepository.findByCustomerId(userId);
+    }
+
+    public Order getOrder(Long userId, Long orderId) {
+
+        Order order = orderRepository.findById(orderId)
+            .orElseThrow(() -> new RuntimeException("Order not found"));
+
+        if (!order.getCustomer().getId().equals(userId)) {
+            throw new RuntimeException("Order not found or does not belong to the user");
+        }
+
+        return order;
     }
 
     

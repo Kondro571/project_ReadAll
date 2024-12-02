@@ -19,7 +19,9 @@ import Filter from './pages/Filter';
 
 import Order from './pages/Order';
 import FilteredProduct from './pages/FilteredProduct';
-
+import ForgotPassword from './pages/ForgotPassword';
+import ResetPassword from './pages/ResetPassword';
+import CheckOrderPage from './pages/CheckOrderPage';
 function App() {
   return (
     <Router>
@@ -41,8 +43,10 @@ function App() {
           <Route exact path='/admin' element={<Admin/>} />
           <Route exact path='/profile' element={<Profil/>} />
           <Route exact path='/filter' element={<Filter/>} />
-          <Route path="/filtered-products" element={<FilteredProduct/>} />
-
+          <Route exact path="/filtered-products" element={<FilteredProduct/>} />
+          <Route exact path="/forgot-password" element={<ForgotPassword />} />
+          <Route exact path="/reset-password" element={<ResetPassword />} />
+          <Route exact path="/check-order/:orderId" element={<CheckOrderPage/>} />
 
 
           <Route exact path='*' element={<Home/>} />

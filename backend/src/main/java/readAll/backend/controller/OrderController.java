@@ -43,6 +43,17 @@ public class OrderController {
         List<Order> orders = orderService.getUserOrders(userDto.getId());
         return new ResponseEntity<>(orders, HttpStatus.OK);
     }
+    
+    @GetMapping("/my-order/{orderId}")
+    public ResponseEntity<Order> getMyOrder(@PathVariable Long orderId) {
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        UserDto userDto = (UserDto) authentication.getPrincipal();
+
+
+        Order order = orderService.getOrder(userDto.getId(), orderId);
+
+        return new ResponseEntity<>(order, HttpStatus.OK);
+    }
 
     @PostMapping("/create")
     public ResponseEntity<OrderResponseDto> createOrder(@RequestBody OrderDto orderDto) {

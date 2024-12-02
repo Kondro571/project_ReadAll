@@ -88,8 +88,8 @@ public class PayUService {
 
     private Map<String, Object> prepareOrderPayload(Order order) {
         Map<String, Object> orderPayload = new HashMap<>();
-        orderPayload.put("notifyUrl", "https://manga4life.com/manga/Ragna-Crimson#unavailable");
-        orderPayload.put("continueUrl", "https://www.youtube.com/");
+        orderPayload.put("notifyUrl", "http://localhost:3000/books");
+        orderPayload.put("continueUrl", "http://localhost:3000/check-order/"+order.getId());
         orderPayload.put("customerIp", "127.0.0.1");
         orderPayload.put("merchantPosId", clientId);
         orderPayload.put("description", "Order Payment");
