@@ -16,7 +16,9 @@ import readAll.backend.dtos.UserDto;
 import readAll.backend.enums.Role;
 import readAll.backend.exception.AppException;
 import readAll.backend.mapper.UserMapper;
+import readAll.backend.model.PasswordResetToken;
 import readAll.backend.model.User;
+import readAll.backend.repository.PasswordResetTokenRepository;
 import readAll.backend.repository.UserRepository;
 
 import org.springframework.http.HttpStatus;
@@ -24,17 +26,13 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.nio.CharBuffer;
-import java.util.Optional;
+import java.time.LocalDateTime;
+
+import java.util.UUID;
 
 import org.springframework.security.core.Authentication;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.ResponseEntity;
-import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.web.bind.annotation.*;
 
-import jakarta.persistence.EntityManager;
-import jakarta.persistence.PersistenceContext;
-import jakarta.persistence.Query;
 
 
 
@@ -46,6 +44,9 @@ public class UserService {
     private final UserRepository userRepository;
     private final PasswordEncoder passwordEncoder;
     private final UserMapper userMapper;
+
+    @Autowired
+    private PasswordResetTokenRepository tokenRepository;
 
     public UserDto login(CredentialsDto credentialsDto) {
         User user = userRepository.findByEmail(credentialsDto.getEmail())
@@ -71,6 +72,86 @@ public class UserService {
         return userMapper.toUserDto(savedUser);
     }
 
+    // public String generatePasswordResetToken(String email) {
+    //     User user = userRepository.findByEmail(email)
+    //             .orElseThrow(() -> new RuntimeException("User not found"));
+    
+    //     // Usuń istniejący token dla użytkownika (jeśli istnieje)
+    //     tokenRepository.deleteByUser(user);
+    
+    //     // Generate new token
+    //     String token = UUID.randomUUID().toString();
+    
+    //     // Save new token to database
+    //     PasswordResetToken resetToken = new PasswordResetToken();
+    //     resetToken.setToken(token);
+    //     resetToken.setUser(user);
+    //     resetToken.setExpiryDate(LocalDateTime.now().plusHours(1)); // Token valid for 1 hour
+    //     tokenRepository.save(resetToken);
+    
+    //     return token;
+    // }
+
+    public String generatePasswordResetToken(String email) {
+        User user = userRepository.findByEmail(email)
+                .orElseThrow(() -> new RuntimeException("User not found"));
+    
+        // Sprawdź, czy istnieje już token dla użytkownika
+        PasswordResetToken resetToken = tokenRepository.findByUser(user)
+                .orElse(new PasswordResetToken());
+    
+        // Ustaw nowy token i datę wygaśnięcia
+        String token = UUID.randomUUID().toString();
+        resetToken.setToken(token);
+        resetToken.setUser(user);
+        resetToken.setExpiryDate(LocalDateTime.now().plusHours(1));
+    
+        // Zapisz token
+        tokenRepository.save(resetToken);
+    
+        return token;
+    }
+
+    
+
+
+    
+
+
+    public boolean verifyToken(String token) {
+        PasswordResetToken resetToken = tokenRepository.findByToken(token)
+                .orElseThrow(() -> new RuntimeException("Invalid token"));
+
+        if (resetToken.getExpiryDate().isBefore(LocalDateTime.now())) {
+            throw new RuntimeException("Token has expired");
+        }
+
+        return true;
+    }
+    public void resetPassword(String token, String newPassword) {
+        PasswordResetToken resetToken = tokenRepository.findByToken(token)
+                .orElseThrow(() -> new RuntimeException("Invalid token"));
+    
+        if (resetToken.getExpiryDate().isBefore(LocalDateTime.now())) {
+            throw new RuntimeException("Token has expired");
+        }
+    
+        User user = resetToken.getUser();
+        user.setPassword(passwordEncoder.encode(newPassword)); // Password hashing
+        userRepository.save(user);
+    
+        tokenRepository.delete(resetToken); // Delete the token after use
+    }
+    
+
+
+
+
+
+
+
+
+
     public UserDto findByEmail(String email) {
         User user = userRepository.findByEmail(email)
                 .orElseThrow(() -> new AppException("Unknown user", HttpStatus.NOT_FOUND));
@@ -81,9 +162,6 @@ public class UserService {
         return userRepository.findById(id)
                 .orElseThrow(() -> new AppException("User not found with ID: " + id, HttpStatus.NOT_FOUND));
     }
-
-
-
 
     public List<User> getAllUsers() {
         return userRepository.findAll();

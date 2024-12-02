@@ -20,7 +20,7 @@ public class BackendApplication {
 		@CrossOrigin(origins = "http://localhost:3000")
         @GetMapping("/api/test")
         public String testBackend() {
-            return "ololololol dzłLa !";
+            return "ololololol dzła!!";
         }
 		@GetMapping("/")
 		public String index() {
