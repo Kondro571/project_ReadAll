@@ -49,6 +49,7 @@ function ProductPage() {
           data.name,
           data.description,
           data.price,
+          data.quantity,
           data.author,
           data.type,
           data.categories.map(categoryData => new CategoryModel(

@@ -35,6 +35,7 @@ function App() {
             productData.name,
             productData.description,
             productData.price,
+            productData.quantity,
             productData.author,
             productData.type,
             productData.categories

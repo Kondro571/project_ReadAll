@@ -1,111 +1,163 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { createUseStyles } from 'react-jss';
 import placeholder from './../../images/placeholder.png';
-import { getAuthToken } from '../../services/BackendService'; // Upewnij się, że masz tę funkcję
+import { getAuthToken } from '../../services/BackendService'; 
 
 const useStyles = createUseStyles({
+
+  
+  product: {
+    display: 'flex',
+    alignItems: 'center',
+    gap: '20px',
+    padding: '15px',
+    marginBottom: '15px',
+    borderRadius: '8px',
+    backgroundColor: '#ffffff',
+    boxShadow: '0 2px 4px rgba(0, 0, 0, 0.1)',
+  },
+  productImage: {
+    width: '100px',
+    borderRadius: '8px',
+    objectFit: 'cover',
+    boxShadow: '0 2px 4px rgba(0, 0, 0, 0.1)',
+  },
+  productInfo: {
+    flex: '1',
+    '& h3': {
+      fontSize: '1.2em',
+      marginBottom: '5px',
+      color: '#333',
+    },
+    '& p': {
+      fontSize: '0.9em',
+      color: '#666',
+    },
+  },
+  removeButton: {
+    alignSelf: 'center',
+    padding: '10px 15px',
+    fontSize: '0.9em',
+    backgroundColor: '#e63946',
+    color: '#fff',
+    border: 'none',
+    borderRadius: '8px',
+    cursor: 'pointer',
+    '&:hover': {
+      backgroundColor: '#d62828',
+    },
+  },
+ 
+  
+  toggleButton: {
+    display: 'none',
+    '@media (max-width: 768px)': {
+      display: 'block',
+      margin: '10px 0',
+      padding: '10px',
+      backgroundColor: '#2a9d8f',
+      color: '#fff',
+      border: 'none',
+      borderRadius: '8px',
+      cursor: 'pointer',
+      textAlign: 'center',
+      '&:hover': {
+        backgroundColor: '#21867a',
+      },
+    },
+  },
+  hidden: {
+    display: 'none',
+  },
+  
   cartAndSummary: {
-    paddingTop: 150,
-    paddingLeft: 200,
+    paddingTop: '130px',
+    paddingLeft: '5%',
     display: 'flex',
     justifyContent: 'space-between',
     margin: '0 auto',
+    maxWidth: '1200px',
+    gap: '30px',
+    '@media (max-width: 768px)': {
+      flexDirection: 'column',
+      alignItems: 'center',
+    },
   },
   cart: {
-    width: 400,
-    marginLeft: 70,
-    borderRight: '1px solid black',
-  },
-  product: {
-    display: 'flex',
-    margin: 20,
-    padding: 20,
-    width: '80%',
-    border: '1px solid black',
-    borderRadius: 10,
-  },
-  productImage: {
-    width: 100,
-    height: '100%',
-    marginRight: 20,
-    marginTop: 10,
-  },
-  removeButton: {
-    backgroundColor: '#770000',
-    color: 'white',
-    padding: '10px 20px',
-    borderRadius: 15,
-    '&:hover': {
-      backgroundColor: '#c90000',
-      color: 'white',
+    flex: '2',
+    padding: '20px',
+    borderRadius: '10px',
+    backgroundColor: '#f8f8f8',
+    boxShadow: '0 4px 8px rgba(0, 0, 0, 0.1)',
+    '@media (max-width: 768px)': {
+      width: '100%',
+      paddingBottom: '100px',
     },
   },
   basketSummary: {
-    flexGrow: 1,
-    padding: 20,
+
+    flex: '1',
+    padding: '20px',
+    borderRadius: '10px',
+
+    backgroundColor: '#ffffff',
+    boxShadow: '0 4px 8px rgba(0, 0, 0, 0.1)',
+    height: '200px',
+    position: 'sticky',
+    bottom: '20px',
+    '@media (max-width: 768px)': {
+      position: 'fixed',
+      bottom: '0',
+      left: '0',
+      width: '100%',
+      margin: '0',
+      borderRadius: '0',
+      boxShadow: '0 -2px 8px rgba(0, 0, 0, 0.2)',
+      zIndex: '1000',
+      height:'auto',
+    },
   },
   summaryBox: {
-    position: 'fixed',
-    width: 300,
-    margin: 10,
-    padding: '1px 20px 15px 20px',
-    backgroundColor: '#efeded',
-    color: '#7e7e7e',
-    height: 220,
-  },
-  summaryRow: {
-    display: 'flex',
-    justifyContent: 'space-between',
+
+    padding: '15px',
+    borderRadius: '10px',
+    backgroundColor: '#f8f8f8',
+    boxShadow: '0 2px 4px rgba(0, 0, 0, 0.1)',
+    '& h2': {
+      marginBottom: '15px',
+      color: '#333',
+    },
+    '& p': {
+      marginBottom: '10px',
+      fontSize: '1em',
+      display: 'flex',
+      justifyContent: 'space-between',
+      color: '#555',
+    },
+    '@media (max-width: 768px)': {
+      width: '80%',
+      padding: '10px 20px',
+    },
   },
   checkoutButton: {
-    backgroundColor: '#000000',
+    marginTop: '10px',
     width: '100%',
-    color: 'white',
-    border: 'none',
     padding: '10px 20px',
+    fontSize: '1em',
+    backgroundColor: '#2a9d8f',
+    color: '#fff',
+    border: 'none',
+    borderRadius: '8px',
     cursor: 'pointer',
     '&:hover': {
-      backgroundColor: '#4d4d4d',
-    },
-  },
-  '@media only screen and (max-width: 705px)': {
-    summaryBox: {
-      position: 'inherit',
-      margin: 'auto',
-      paddingLeft: 30,
-    },
-    cartAndSummary: {
-      display: 'block',
-      width: 'auto',
-    },
-    cart: {
-      width: 'auto',
-      border: 'none',
-      margin: 'auto',
-    },
-    product: {
-      flexDirection: 'row',
-      alignItems: 'center',
-      border: 'none',
-      borderRadius: 0,
-      borderBottom: '1px solid black',
-    },
-    productImage: {
-      width: 100,
-      marginBottom: 0,
-      marginRight: 10,
-    },
-    productInfo: {
-      paddingLeft: 10,
-    },
-    removeButton: {
-      alignSelf: 'flex-end',
+      backgroundColor: '#21867a',
     },
   },
 });
 
 function CartAndSummary({ basket }) {
   const classes = useStyles();
+  const [isSummaryVisible, setIsSummaryVisible] = useState(true);
 
   if (basket === null) {
     return <div>Loading...</div>;
@@ -176,14 +228,22 @@ function CartAndSummary({ basket }) {
       </aside>
 
       <div className={classes.basketSummary}>
-        <div className={classes.summaryBox}>
-          <h2>Summary</h2>
-          <p className={classes.summaryRow}>
-            <span>Product Value:</span> <span>${calculateTotal()}</span>
-          </p>
-          <button className={classes.checkoutButton} onClick={handleCheckout}>
-            Proceed to Checkout
-          </button>
+        <button
+          className={classes.toggleButton}
+          onClick={() => setIsSummaryVisible(!isSummaryVisible)}
+        >
+          {isSummaryVisible ? 'Hide Summary' : 'Show Summary'}
+        </button>
+        <div className={`${isSummaryVisible ? '' : classes.hidden}`}>
+          <div className={classes.summaryBox}>
+            <h2>Summary</h2>
+            <p className={classes.summaryRow}>
+              <span>Product Value:</span> <span>${calculateTotal()}</span>
+            </p>
+            <button className={classes.checkoutButton} onClick={handleCheckout}>
+              Proceed to Checkout
+            </button>
+          </div>
         </div>
       </div>
     </div>

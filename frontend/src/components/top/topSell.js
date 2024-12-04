@@ -12,11 +12,11 @@ const useStyles = createUseStyles({
     position: "absolute",
     marginTop: "-30px",
     padding: "15px 30px",
-    backgroundColor: "#c70202",
-    border: "1px solid #000000",
+    backgroundColor: "#F96D00", // Pomarańczowy akcent
+    border: "1px solid #393E46", // Średni grafit
     fontSize: "large",
-    color: "#fff",
-    textShadow: "2px 2px 4px rgba(0, 0, 0, 1)",
+    color: "#F2F2F2", // Jasny tekst
+    textShadow: "2px 2px 4px rgba(0, 0, 0, 0.5)",
     zIndex: 1,
   },
   wrapper: {
@@ -24,30 +24,34 @@ const useStyles = createUseStyles({
     overflowX: "hidden",
     flexWrap: "nowrap",
     padding: "10px",
-    backgroundColor: "rgb(56, 56, 56)",
+    backgroundColor: "#dbdbdb", // Ciemny grafit jako tło
     height: "250px",
-    paddingLeft: "150px",
+    paddingLeft: "70px",
     alignItems: "center",
     "& a": {
       textDecoration: "none",
     },
   },
   productCard: {
-    backgroundColor: "rgb(134, 3, 3)",
-    boxShadow: "3px 3px 5px black",
+    backgroundColor: "#393E46", // Średni grafit
+    boxShadow: "3px 3px 5px rgba(0, 0, 0, 0.5)",
     width: "300px",
     height: "200px",
     flex: "0 0 auto",
     marginRight: "40px",
     display: "flex",
     borderRadius: "8px",
-    color: "white",
+    color: "#F2F2F2", // Jasny tekst
+    "&:hover": {
+      backgroundColor: "#F96D00", // Pomarańczowy przy hoverze
+    },
   },
   productImage: {
     margin: "10px",
     width: "130px",
     height: "170px",
-    boxShadow: "2px 2px 5px black",
+    boxShadow: "2px 2px 5px rgba(0, 0, 0, 0.5)",
+    borderRadius: "5px",
   },
   productInfo: {
     marginTop: "10px",
@@ -56,17 +60,16 @@ const useStyles = createUseStyles({
     justifyContent: "center",
     marginLeft: "10px",
     "& h3": {
-      textShadow: "5px 5px 5px black",
+      textShadow: "2px 2px 5px rgba(0, 0, 0, 0.5)",
       fontSize: "20px",
     },
   },
   navButton: {
     position: "absolute",
-    top: "65%",
-    margin: "10px",
-    transform: "translateY(-50%)",
-    width: "70px",
-    height: "70px",
+    top: "70%", // Wyśrodkowanie przycisku w pionie
+    transform: "translateY(-50%)", // Korekta dla idealnego wyśrodkowania
+    width: "50px",
+    height: "50px",
     backgroundColor: "rgba(0, 0, 0, 0.5)",
     color: "#fff",
     fontSize: "40px",
@@ -75,14 +78,19 @@ const useStyles = createUseStyles({
     alignItems: "center",
     cursor: "pointer",
     borderRadius: "20px",
+    userSelect: "none", // Zapobieganie zaznaczaniu
+    "&:hover": {
+      backgroundColor: "rgba(249, 109, 0, 0.7)", // Efekt hover
+    },
   },
   leftNav: {
-    left: 0,
+    left: "10px", // Odstęp od lewej krawędzi
   },
   rightNav: {
-    right: 0,
+    right: "10px", // Odstęp od prawej krawędzi
   },
 });
+
 
 function TopBooksThisWeek({ products }) {
   const classes = useStyles();
@@ -93,19 +101,20 @@ function TopBooksThisWeek({ products }) {
     const scrollAmount = 340;
 
     if (container) {
-      if (direction === 'left') {
-        container.scrollLeft -= scrollAmount;
-      } else if (direction === 'right') {
-        container.scrollLeft += scrollAmount;
-      }
+      container.scrollTo({
+        left: direction === "left" ? container.scrollLeft - scrollAmount : container.scrollLeft + scrollAmount,
+        behavior: "smooth", // Płynne przewijanie
+      });
     }
   };
 
   return (
     <div className={classes.topThisWeekContainer}>
       <div className={classes.topThisWeek}>TOP THIS WEEK</div>
-      <div className={`${classes.navButton} ${classes.leftNav}`} onClick={() => handleScroll('left')}>
-        {"<"}
+      <div className={`${classes.navButton} ${classes.leftNav}`} onClick={() => handleScroll("left")}>
+        <svg width="24" height="24" xmlns="http://www.w3.org/2000/svg" fill="white" viewBox="0 0 24 24">
+          <path d="M15.41 16.59L10.83 12l4.58-4.59L14 6l-6 6 6 6z" />
+        </svg>
       </div>
       <div className={classes.wrapper} ref={containerRef}>
         {products.map((product, index) => (
@@ -125,11 +134,14 @@ function TopBooksThisWeek({ products }) {
           </Link>
         ))}
       </div>
-      <div className={`${classes.navButton} ${classes.rightNav}`} onClick={() => handleScroll('right')}>
-        {">"}
+      <div className={`${classes.navButton} ${classes.rightNav}`} onClick={() => handleScroll("right")}>
+        <svg width="24" height="24" xmlns="http://www.w3.org/2000/svg" fill="white" viewBox="0 0 24 24">
+          <path d="M8.59 16.59L13.17 12l-4.58-4.59L10 6l6 6-6 6z" />
+        </svg>
       </div>
     </div>
   );
 }
 
 export default TopBooksThisWeek;
+

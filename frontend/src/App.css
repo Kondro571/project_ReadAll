@@ -1,5 +1,13 @@
+body{
+
+  background-color:#393E46;
+}
 .App {
   text-align: center;
+  background-color:#393E46;
+  color: #eb510a;
+
+
 }
 
 .App-logo {

@@ -8,7 +8,7 @@ import { useParams } from 'react-router-dom';
 const useStyles = createUseStyles({
   container: {
     width: '80%',
-    margin: '50px auto',
+    margin: ' auto',
     textAlign: 'center',
     paddingTop: 130,
   },
@@ -38,9 +38,26 @@ const useStyles = createUseStyles({
       backgroundColor: '#0056b3',
     },
   },
+  
 });
-
-function CheckOrderPage() {
+const customToastContainer = {
+  position: "top-center", // Pozycja na dole, na środku
+  autoClose: 5000, // Czas wyświetlania powiadomienia (5 sekund)
+  hideProgressBar: false,
+  newestOnTop: true,
+  closeOnClick: true,
+  rtl: false,
+  pauseOnFocusLoss: true,
+  pauseOnHover: true,
+  draggable: true,
+  limit: 1, // Możesz ograniczyć liczbę powiadomień
+  style: {
+    marginBottom: '25px', // Ustawienie odstępu pomiędzy powiadomieniami
+    padding: '10px', // Ustawienie paddingu dla samego powiadomienia
+    paddingTop: '130px', // Ustawienie
+  },
+};
+function CheckOrder() {
   const classes = useStyles();
   const [order, setOrder] = useState(null);
   const [loading, setLoading] = useState(true);
@@ -86,21 +103,19 @@ function CheckOrderPage() {
       method: 'GET',
       headers: {
         'Content-Type': 'application/json',
-        'Authorization': `Bearer ${token}`,
+        'Authorization': `Bearer ${token}`
       },
     })
       .then((response) => response.text())
       .then((result) => {
         if (result === "Order has been paid successfully") {
-        console.log(result)
-
           toast.success(result);
         } else {
           toast.error(result);
         }
       })
       .catch(() => toast.error('Error verifying payment.'));
-  };
+    }
 
   if (loading) {
     return <p>Loading order...</p>;
@@ -130,8 +145,10 @@ function CheckOrderPage() {
         </tbody>
       </table>
       <ToastContainer />
+      <ToastContainer {...customToastContainer} />
+
     </div>
   );
 }
 
-export default CheckOrderPage;
+export default CheckOrder;

@@ -1,6 +1,6 @@
 
 import Header from '../components/header/Header';
-import CheckOrderPage from '../components/order/CheckOrderPage';
+import CheckOrderPage from '../components/order/CheckOrder';
 
 
 

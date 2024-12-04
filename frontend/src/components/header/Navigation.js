@@ -42,30 +42,45 @@ const useStyles = createUseStyles({
     fontSize: 23,
   },
   mainPageLink: {
-    display: 'none',
+    display: 'none', // Ukrycie Main Page w desktopie
   },
-  '@media only screen and (max-width: 705px)': {
-    mainPageLink: {
-      display: 'block',
+  menuListClosed: {
+    display: 'none', // Ukrycie menu w widoku mobilnym domyślnie
+  },
+  menuListOpen: {
+    paddingLeft:0,
+    display: 'flex',
+    flexDirection: 'column', // Układ pionowy w widoku mobilnym
+    position: 'absolute',
+    top: '75px',
+    left: 0,
+    width: '100%',
+    backgroundColor: 'rgb(56, 57, 63)',
+    zIndex: 1000,
+    listStyle:"none",
+
+
+
+  },
+  '@media (max-width: 705px)': {
+    mobileIcon: {
+      display: 'block', // Pokaż ikonę hamburgera w widoku mobilnym
+      
     },
     menuList: {
-      position: 'fixed',
-      marginTop: 30,
+      display: 'none', // Ukryj menu w widoku mobilnym domyślnie
     },
-    mobileIcon: {
-      display: 'block',
+    menuListOpen: {
+      display: 'flex', // Wyświetl menu w widoku mobilnym po kliknięciu
+    },
+    mainPageLink: {
+      display: 'block', // Pokaż Main Page w widoku mobilnym
     },
     menuItem: {
-      width: '100%',
-      marginLeft: 0,
-      marginBottom: 5,
-      '&:hover': {
-        backgroundColor: '#333',
-      },
-    },
-    menuListClosed: {
-      display: 'none',
-      flexDirection: 'column',
+      width: '100%', // Link zajmuje całą szerokość
+      paddingBottom: 15, // Dodanie odstępu między linkami
+      paddingTop: 15, //
+      paddingLeft:20,
     },
   },
 });
@@ -81,26 +96,20 @@ const Navigation = () => {
   return (
     <nav className={classes.category}>
       <div className={classes.mobileIcon} onClick={toggleMenu}>
-        &#9776;
+        &#9776; {/* Ikona hamburgera */}
       </div>
-      <ol className={`${classes.menuList} ${isMenuOpen ? classes.menuListClosed : ''}`}>
-        <li className={classes.mainPageLink}>
-          <a href="#">Main page</a>
+      <ol className={`${isMenuOpen ? classes.menuListOpen : classes.menuList}`}>
+        <li className={`${classes.menuItem} ${classes.mainPageLink}`}>
+          <a href="/" className={classes.link}>Main page</a>
         </li>
         <li className={classes.menuItem}>
-          <a href="/books" className={classes.link}>
-            Books
-          </a>
+          <a href="/books" className={classes.link}>Books</a>
         </li>
         <li className={classes.menuItem}>
-          <a href="/comics" className={classes.link}>
-            Comics
-          </a>
+          <a href="/comics" className={classes.link}>Comics</a>
         </li>
         <li className={classes.menuItem}>
-          <a href="/manga" className={classes.link}>
-            Manga
-          </a>
+          <a href="/manga" className={classes.link}>Manga</a>
         </li>
       </ol>
     </nav>

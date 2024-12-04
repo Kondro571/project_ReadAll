@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { createUseStyles } from 'react-jss';
 import { ToastContainer, toast } from 'react-toastify';
+import { getAuthToken } from "../../services/BackendService";
 import 'react-toastify/dist/ReactToastify.css';
 
 const useStyles = createUseStyles({
@@ -104,6 +105,8 @@ function AddProduct() {
     const formData = new FormData();
     formData.append('image', product.image);
 
+    const token = getAuthToken();
+
     try {
       const imageResponse = await fetch('http://localhost:8080/upload-image', {
         method: 'POST',
@@ -118,6 +121,7 @@ function AddProduct() {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
+          'Authorization': `Bearer ${token}`
         },
         body: JSON.stringify({
           name: product.name,
