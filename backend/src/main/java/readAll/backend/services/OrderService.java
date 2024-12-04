@@ -159,9 +159,8 @@ public class OrderService {
 
         for (Transaction transaction : transactions) {
             // Sprawdź status każdej transakcji
-            System.out.println(transaction.getTransactionId());
+ 
             boolean paymentVerified = payUService.verifyPayment(transaction.getTransactionId());
-            System.out.println("ccccccccccccccccccccccccccccccccc");
 
             if (paymentVerified) {
                 isPaid = true; // Jeśli któraś transakcja jest opłacona, przerwij pętlę

@@ -51,6 +51,9 @@ public class ProductService {
         product.setName(productDto.getName());
         product.setDescription(productDto.getDescription());
         product.setPrice(productDto.getPrice());
+        // product.setQuantity(productDto.getQuantity());
+        product.setQuantity(100);
+
         product.setAuthor(productDto.getAuthor());
         product.setType(productDto.getType());
         product.setImage(productDto.getImage());
@@ -69,6 +72,39 @@ public class ProductService {
 
         return productRepository.save(product);
     }
+
+    public Product updateProduct(Long id, ProductDto productDto) {
+        // Znajdź produkt do edycji
+        Product product = productRepository.findById(id)
+            .orElseThrow(() -> new RuntimeException("Product not found"));
+    
+        // Aktualizuj dane produktu
+        product.setName(productDto.getName());
+        product.setDescription(productDto.getDescription());
+        product.setPrice(productDto.getPrice());
+        product.setQuantity(100);
+        
+        product.setAuthor(productDto.getAuthor());
+        product.setType(productDto.getType());
+        product.setImage(productDto.getImage());
+    
+        // Aktualizuj kategorie
+        Set<Category> categories = new HashSet<>();
+        for (String categoryName : productDto.getCategories()) {
+            Category category = categoryRepository.findByName(categoryName)
+                .orElseGet(() -> {
+                    Category newCategory = new Category();
+                    newCategory.setName(categoryName);
+                    return categoryRepository.save(newCategory);
+                });
+            categories.add(category);
+        }
+        product.setCategories(categories);
+    
+        // Zapisz zmiany
+        return productRepository.save(product);
+    }
+    
 
     public void deleteProduct(Long id) {
         if (!productRepository.existsById(id)) {

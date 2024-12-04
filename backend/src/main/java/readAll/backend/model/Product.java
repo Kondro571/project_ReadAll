@@ -18,6 +18,8 @@ public class Product {
     private String description;
     
     private Float price;
+
+    private int quantity;
     
     private String author;
 
@@ -66,11 +68,21 @@ public class Product {
     public Float getPrice() {
         return price;
     }
-    
+
     public void setPrice(Float price) {
         this.price = price;
     }
     
+
+    public int getQuantity() {
+        return quantity;
+    }
+    
+    public void setQuantity(int quantity) {
+        this.quantity = quantity;
+    }
+    
+ 
     public String getAuthor() {
         return author;
     }

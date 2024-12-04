@@ -147,9 +147,7 @@ public class PayUService {
                     .build();
     
             HttpResponse<String> response = httpClient.send(request, HttpResponse.BodyHandlers.ofString());
-            System.out.println("Response Status Code: " + response.statusCode());
-            System.out.println("Response Body: " + response.body());
-            System.out.println(response.toString());
+  
 
 
             
@@ -160,7 +158,7 @@ public class PayUService {
                 String redirectUri = (String) responseBody.get("redirectUri");
                 // Zapis transakcji
                 saveTransaction(order, responseBody);
-                System.out.println("juz nie wiem");
+     
     
                 return redirectUri;
             } else {
@@ -185,7 +183,7 @@ public class PayUService {
                     .build();
 
             HttpResponse<String> response = httpClient.send(request, HttpResponse.BodyHandlers.ofString());
-            System.out.println(response.body());
+           
             if (response.statusCode() == HttpStatus.OK.value()) {
                 Map<String, Object> responseBody = objectMapper.readValue(response.body(), Map.class);
                 Map<String, Object> status = (Map<String, Object>) responseBody.get("status");

@@ -20,7 +20,6 @@ public class EmailService {
 
     public void sendEmail(String to, String subject, String text) {
         try {
-            System.out.println("aaaaaaaaaaa");
             SimpleMailMessage message = new SimpleMailMessage();
             message.setFrom("noreply@ReadAll.com"); // Nadawca wiadomości
             message.setTo(to); // Odbiorca

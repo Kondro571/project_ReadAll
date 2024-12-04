@@ -4,9 +4,12 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.ClassPathResource;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.security.core.Authentication;
 
 import readAll.backend.dtos.ProductDto;
+import readAll.backend.dtos.UserDto;
 import readAll.backend.model.Category;
 import readAll.backend.model.Product;
 import readAll.backend.repository.CategoryRepository;
@@ -55,9 +58,35 @@ public class ProductController {
 
     @PostMapping
     public ResponseEntity<Product> createProduct(@RequestBody ProductDto productDto) {
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        UserDto userDto = (UserDto) authentication.getPrincipal();
+
+        // Sprawdź rolę użytkownika
+        if (!userDto.getRole().name().equals("ADMIN")) {
+
+            return ResponseEntity.status(HttpStatus.FORBIDDEN).build(); // Zwróć błąd 403, jeśli nie ma uprawnień
+        }
+
         Product product = productService.createProduct(productDto);
         return ResponseEntity.status(HttpStatus.CREATED).body(product);
     }
+
+
+    @PutMapping("/{id}")
+    public ResponseEntity<Product> updateProduct(@PathVariable Long id, @RequestBody ProductDto productDto) {
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        UserDto userDto = (UserDto) authentication.getPrincipal();
+
+        // Opcjonalnie: sprawdź, czy użytkownik ma prawo edytować produkt
+        if (!userDto.getRole().name().equals("ADMIN")) {
+            return ResponseEntity.status(HttpStatus.FORBIDDEN).build();
+        }
+
+        Product updatedProduct = productService.updateProduct(id, productDto);
+        return ResponseEntity.ok(updatedProduct);
+    }
+
+
 
     @DeleteMapping("/{productId}")
     public ResponseEntity<?> deleteProduct(@PathVariable Long productId) {

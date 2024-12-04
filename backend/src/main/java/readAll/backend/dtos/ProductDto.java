@@ -16,6 +16,7 @@ public class ProductDto {
     private String name;
     private String description;
     private Float price;
+    private int quantity;
     private String author;
     private String type;
     private List<String> categories;

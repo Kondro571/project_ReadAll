@@ -60,6 +60,9 @@ public class SecurityConfig {
                 .addFilterBefore(new JwtAuthFilter(userAuthenticationProvider), BasicAuthenticationFilter.class)
                 .authorizeHttpRequests(auth -> auth
                         .requestMatchers("/images/**").permitAll()
+                        // .requestMatchers(HttpMethod.PUT, "/products/**").hasRole("ADMIN")
+                        // .requestMatchers(HttpMethod.GET, "/products/**").permitAll()
+                        // .anyRequest().authenticated()
                 )
                 .headers(headers -> headers.frameOptions().disable())
                 .csrf(AbstractHttpConfigurer::disable)
