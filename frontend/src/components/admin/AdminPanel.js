@@ -50,6 +50,24 @@ const useStyles = createUseStyles({
   },
 });
 
+const customToastContainer = {
+  position: "top-right", // Pozycja na dole, na środku
+  autoClose: 5000, // Czas wyświetlania powiadomienia (5 sekund)
+  hideProgressBar: false,
+  newestOnTop: true,
+  closeOnClick: true,
+  rtl: false,
+  pauseOnFocusLoss: true,
+  pauseOnHover: true,
+  draggable: true,
+  limit: 1, // Możesz ograniczyć liczbę powiadomień
+  style: {
+    marginBottom: '25px', // Ustawienie odstępu pomiędzy powiadomieniami
+    padding: '10px', // Ustawienie paddingu dla samego powiadomienia
+    paddingTop: '130px', // Ustawienie
+  },
+};
+
 function AddProduct() {
   const classes = useStyles();
 
@@ -238,7 +256,8 @@ function AddProduct() {
           Add Product
         </button>
       </form>
-      <ToastContainer className={classes.toast} />
+      <ToastContainer {...customToastContainer} />
+
     </div>
   );
 }

@@ -70,6 +70,7 @@ function App() {
             productData.name,
             productData.description,
             productData.price,
+            data.quantity,
             productData.author,
             productData.type,
             productData.categories // Bezpośrednie przypisanie kategorii

@@ -5,6 +5,7 @@ import {jwtDecode} from 'jwt-decode';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import { createUseStyles } from 'react-jss';
+import EditProduct from './EditProduct';
 
 const useStyles = createUseStyles({
   productDetails: {
@@ -146,9 +147,52 @@ const useStyles = createUseStyles({
       border: "none",
     },
   },
+  modal: {
+    display: "flex",
+    justifyContent: "center",
+    alignItems: "center",
+    position: "fixed",
+    top: 0,
+    left: 0,
+    width: "100%",
+    height: "100%",
+    backgroundColor: "rgba(0, 0, 0, 0.5)",
+    zIndex: 1000,
+    "& .modalContent": {
+      backgroundColor: "#393E46",
+      padding: "20px",
+      borderRadius: "8px",
+      textAlign: "center",
+      position: "relative",
+      width: "300px",
+      maxWidth: "80%",
+      color: "#F2F2F2",
+      boxShadow: "3px 3px 5px rgba(0, 0, 0, 0.5)",
+    },
+    "& button": {
+      margin: "10px",
+    },
+  },
+  
 });
 
-
+const customToastContainer = {
+  position: "top-right", // Pozycja na dole, na środku
+  autoClose: 5000, // Czas wyświetlania powiadomienia (5 sekund)
+  hideProgressBar: false,
+  newestOnTop: true,
+  closeOnClick: true,
+  rtl: false,
+  pauseOnFocusLoss: true,
+  pauseOnHover: true,
+  draggable: true,
+  limit: 1, // Możesz ograniczyć liczbę powiadomień
+  style: {
+    marginBottom: '25px', // Ustawienie odstępu pomiędzy powiadomieniami
+    padding: '10px', // Ustawienie paddingu dla samego powiadomienia
+    paddingTop: '130px', // Ustawienie
+  },
+};
 
 function Product({ product }) {
   const classes = useStyles();
@@ -158,6 +202,22 @@ function Product({ product }) {
   const [isInBasket, setIsInBasket] = useState(false);
   const [isAdmin, setIsAdmin] = useState(false);
   const [isAuthenticated, setIsAuthenticated] = useState(false);
+  const [isEditMode, setIsEditMode] = useState(false);
+  const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false);
+
+  const openDeleteModal = () => setIsDeleteModalOpen(true);
+  const closeDeleteModal = () => setIsDeleteModalOpen(false);
+  
+  // Funkcja do zamknięcia trybu edycji
+  const closeEditMode = () => {
+    setIsEditMode(false);
+  };
+
+  // Funkcja odświeżenia widoku po edycji
+  const refreshData = () => {
+    window.location.reload(); // Możesz zastąpić bardziej efektywną metodą odświeżania
+  };
+
 
   useEffect(() => {
     const token = getAuthToken();
@@ -258,7 +318,7 @@ function Product({ product }) {
       });
 
       if (!response.ok) {
-        throw new Error('Failed to delete product');
+        throw new Error('Failed to delete product'+response);
       }
 
       toast.success('Product deleted successfully!', {
@@ -267,9 +327,7 @@ function Product({ product }) {
       window.location.href = "http://localhost:3000";
     } catch (error) {
       console.error('Error deleting product:', error);
-      toast.error('Failed to delete product', {
-        position: "top-center",
-      });
+      toast.error('Failed to delete product');
     }
   };
 
@@ -287,14 +345,54 @@ function Product({ product }) {
           />
         </div>
         <div className={classes.productInfo}>
+        {!isEditMode && (<>
           <h2>{name}</h2>
           <p>Author: {author}</p>
           <p>Genre(s): {categories.map((category) => category.name).join(', ')}</p>
           <p>Description: {product.description}</p>
+          </>
+        )}
           {isAdmin && (
-            <button onClick={handleDeleteProduct} className={classes.button}>
-              Delete Product
+  <>
+    <button onClick={openDeleteModal} className={classes.button}>
+      Delete Product
+    </button>
+    {isDeleteModalOpen && (
+      <div className={classes.modal}>
+        <div className="modalContent">
+          <p>Are you sure you want to delete this product?</p>
+          <button onClick={handleDeleteProduct} className={classes.button}>
+            Yes, Delete
+          </button>
+          <button onClick={closeDeleteModal} className={classes.button}>
+            Cancel
+          </button>
+        </div>
+      </div>
+    )}
+  </>
+)}
+
+          {isAdmin && (
+             <>
+             {isEditMode ? (
+            <button onClick={closeEditMode} className={classes.button}>
+              Cancel Edit
             </button>
+          ) : (
+            <button onClick={() => setIsEditMode(true)} className={classes.button}>
+              Edit Product
+            </button>
+          )}
+
+              {isEditMode && (
+                <EditProduct
+                  product={product}
+                  onClose={closeEditMode}
+                  onUpdate={refreshData}
+                />
+              )}
+            </>
           )}
         </div>
         {isAuthenticated && (
@@ -320,7 +418,7 @@ function Product({ product }) {
           </div>
         </div>
       )}
-      <ToastContainer />
+        <ToastContainer {...customToastContainer} />
     </div>
   );
   

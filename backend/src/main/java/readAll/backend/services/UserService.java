@@ -60,7 +60,7 @@ public class UserService {
 
     public UserDto register(SignUpDto userDto) {
         if (doesUserExistByEmail(userDto.getEmail())) {
-            throw new AppException("Login already exists", HttpStatus.BAD_REQUEST);
+            throw new AppException("Email already exists", HttpStatus.BAD_REQUEST);
         }
 
         User user = userMapper.signUpToUser(userDto);

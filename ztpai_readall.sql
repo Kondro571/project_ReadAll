@@ -77,6 +77,13 @@ CREATE TABLE IF NOT EXISTS `user_info` (
 	PRIMARY KEY (`id`)
 );
 
+CREATE TABLE IF NOT EXISTS `Password_Reset_Token` (
+	`id` int AUTO_INCREMENT NOT NULL UNIQUE,
+	`token` varchar(50),
+	`expiryDate` datetime NOT NULL,
+	`user_id` int NOT NULL,
+	PRIMARY KEY (`id`)
+);
 
 
 
@@ -92,3 +99,4 @@ ALTER TABLE `Basket` ADD CONSTRAINT `Basket_fk1` FOREIGN KEY (`customer_id`) REF
 
 ALTER TABLE `Basket` ADD CONSTRAINT `Basket_fk2` FOREIGN KEY (`product_id`) REFERENCES `Product`(`id`);
 ALTER TABLE `user_info` ADD CONSTRAINT `user_info_fk1` FOREIGN KEY (`user_id`) REFERENCES `User`(`id`);
+ALTER TABLE `Password_Reset_Token` ADD CONSTRAINT `Password_Reset_Token_fk1` FOREIGN KEY (`user_id`) REFERENCES `User`(`id`);

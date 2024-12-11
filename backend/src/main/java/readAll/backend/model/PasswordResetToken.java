@@ -21,8 +21,7 @@ public class PasswordResetToken {
     @JoinColumn(name = "user_id")
     private User user;
 
-    // Getters and setters
-
+   
     public Long getId() {
         return id;
     }
