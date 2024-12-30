@@ -27,23 +27,26 @@ const useStyles = createUseStyles({
     fontSize: 16,
     '&::file-selector-button': {
       fontWeight: 'bold',
-      color: 'rgb(175, 3, 3)',
+      color: '#F96D00',
       padding: 7,
       border: 'thin solid grey',
       borderRadius: 3,
+      '&:hover': {
+        backgroundColor: '#ebe4e1',
+      },
     },
   },
   button: {
     padding: 10,
     fontSize: 16,
-    backgroundColor: '#840101',
+    backgroundColor: '#F96D00',
     color: 'white',
     border: 'none',
     borderRadius: 4,
     cursor: 'pointer',
     '&:hover': {
-      backgroundColor: '#863909ae',
-    },
+      backgroundColor: '#FF8C33',
+        },
   },
   toast: {
     fontSize: '14px !important',

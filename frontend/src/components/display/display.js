@@ -15,6 +15,7 @@ const useStyles = createUseStyles({
     padding: '20px',
     paddingTop: '70px',
   },
+
   productCard: {
     display: 'inline-block',
     width: '250px',
@@ -22,8 +23,11 @@ const useStyles = createUseStyles({
     marginBottom: '20px',
     margin: '20px',
     color: 'white',
-    backgroundColor: 'rgb(134, 3, 3)',
+    backgroundColor: "#393E46", // Średni grafit
     boxShadow: '3px 3px 5px black',
+    "&:hover": {
+      backgroundColor: "#F96D00", // Pomarańczowy przy hoverze
+    },
   },
   productCardImage: {
     height: '150px',

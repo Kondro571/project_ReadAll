@@ -17,6 +17,8 @@ const useStyles = createUseStyles({
     backgroundColor: "#393E46", // Średni grafit jako tło
     color: "#F2F2F2", // Jasny tekst
     borderRadius: "10px",
+    border: '3px solid #555',
+
     boxShadow: "3px 3px 5px rgba(0, 0, 0, 0.5)",
     "& > div": {
       padding: "20px",
@@ -314,6 +316,7 @@ function Product({ product }) {
         method: 'DELETE',
         headers: {
           'Content-Type': 'application/json',
+          'Authorization': `Bearer ${token}`,
         },
       });
 

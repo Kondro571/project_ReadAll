@@ -23,15 +23,16 @@ const useStyles = createUseStyles({
     padding: 10,
     position: 'relative',
 
+
     borderBottom: '1px solid gray',
     '&:nth-child(3n - 1), &:nth-child(3n + 1), &:nth-child(3n + 2)': {
       borderRight: '1px solid gray',
     },
     '& p':{
-      color:'black',
-    },
+      color: 'white',
+        },
     '& h1':{
-      color:'black',
+      color: 'white',
     },
   },
   categoryTileLink: {

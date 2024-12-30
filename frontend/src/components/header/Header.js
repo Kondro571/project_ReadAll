@@ -36,17 +36,37 @@ function Header() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [isAuthenticated, setIsAuthenticated] = useState(false);
   const [isAdmin, setIsAdmin] = useState(false);
+  const [products, setProducts] = useState([]);
+  const [filteredProducts, setFilteredProducts] = useState([]);
 
-  const classes = useStyles(); // Hook do używania stylów
+  useEffect(() => {
+    fetch('http://localhost:8080/products')
+      .then(response => response.json())
+      .then(data => {
+        const fetchedProducts = data.map(product => ({
+          id: product.id,
+          name: product.name,
+          image: product.image,
+          description: product.description,
+          price: product.price,
+          author: product.author,
+          type: product.type,
+          categories: product.categories,
+        }));
+        setProducts(fetchedProducts);
+        setFilteredProducts(fetchedProducts);
+      })
+      .catch(error => console.error('Error fetching data:', error));
+  }, []);
+
+
+  const classes = useStyles();
 
   useEffect(() => {
     const token = getAuthToken();
-
     if (token) {
       const decodedToken = jwtDecode(token);
       const currentTime = Date.now() / 1000;
-      console.log(currentTime);
-      console.log(decodedToken.exp);
       if (decodedToken.exp < currentTime) {
         handleLogout();
       } else {
@@ -75,13 +95,14 @@ function Header() {
     <header className={classes.header}>
       <Logo />
       <Navigation />
-      <SearchBar />
+      <SearchBar products={products} /> {/* Przekazujemy listę produktów */}
       {isAuthenticated ? <UserMenu /> : <a className={classes.loginLink} href="/login">log in</a>}
     </header>
   );
 }
 
 export default Header;
+
 
 
 

@@ -155,8 +155,7 @@ function EditProduct({ product, onClose, onUpdate }) {
         // Jeśli obrazek jest null, użyj istniejącego
         updatedImage = product.image;
       }
-      console.log(updatedImage);
-      console.log("sssssssssssssss");
+
       // Wyślij żądanie PUT do API
       const response = await fetch(`http://localhost:8080/products/${product.id}`, {
         method: "PUT",

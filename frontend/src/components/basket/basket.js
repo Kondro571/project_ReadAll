@@ -81,6 +81,7 @@ const useStyles = createUseStyles({
     '@media (max-width: 768px)': {
       flexDirection: 'column',
       alignItems: 'center',
+      paddingLeft: '0',
     },
   },
   cart: {
@@ -90,7 +91,7 @@ const useStyles = createUseStyles({
     backgroundColor: '#f8f8f8',
     boxShadow: '0 4px 8px rgba(0, 0, 0, 0.1)',
     '@media (max-width: 768px)': {
-      width: '100%',
+      width: '85%',
       paddingBottom: '100px',
     },
   },
@@ -144,13 +145,13 @@ const useStyles = createUseStyles({
     width: '100%',
     padding: '10px 20px',
     fontSize: '1em',
-    backgroundColor: '#2a9d8f',
+    backgroundColor: '#FF8C33',
     color: '#fff',
     border: 'none',
     borderRadius: '8px',
     cursor: 'pointer',
     '&:hover': {
-      backgroundColor: '#21867a',
+      backgroundColor: '#d67224',
     },
   },
 });

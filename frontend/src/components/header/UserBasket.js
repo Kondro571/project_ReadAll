@@ -102,7 +102,7 @@ function UserMenu() {
         <div 
           className={`${classes.menuItems} ${isMenuOpen ? classes.userMenuShow : ''}`}
         >
-          {isAdmin && <a href="/admin" className={classes.menuBtn}>Admin Staff</a>}
+          {isAdmin && <a href="/admin" className={classes.menuBtn}>Add product</a>}
           {isAuthenticated && <a href="#" className={classes.menuBtn} onClick={handleLogout}>Log out</a>}
         </div>
       </div>

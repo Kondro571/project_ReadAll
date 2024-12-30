@@ -11,8 +11,13 @@ const useStyles = createUseStyles({
     width: "90%",
     marginLeft: "50px",
     textAlign: "left",
+    backgroundColor: "white",
     "& img": {
       height: "90px",
+    },
+    "@media (max-width: 768px)": {
+      width: "100%",
+      margin: "0px",
     },
   },
   loginContainer: {

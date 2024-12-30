@@ -3,62 +3,99 @@ import { getAuthToken } from "../../services/BackendService";
 import { createUseStyles } from 'react-jss';
 
 const useStyles = createUseStyles({
-  userInfo: {
-    maxWidth: 800,
-    margin: '0 auto',
-    padding: 20,
-    paddingTop: 130,
-    border: '1px solid #ddd',
-    borderRadius: 8,
-    backgroundColor: '#f9f9f9',
-  },
-  header: {
-    textAlign: 'center',
-    marginBottom: 20,
-  },
-  form: {
-    display: 'grid',
-    gridTemplateColumns: '1fr 1fr',
-    gap: 10,
-  },
-  formGroup: {
-    display: 'flex',
-    flexDirection: 'column',
-  },
-  label: {
-    marginBottom: 5,
-    fontWeight: 'bold',
-  },
-  input: {
-    padding: 8,
-    border: '1px solid #ccc',
-    borderRadius: 4,
-  },
-  buttonSubmit: {
-    marginTop: 10,
-    padding: 10,
-    border: 'none',
-    borderRadius: 4,
-    cursor: 'pointer',
-    backgroundColor: '#4CAF50',
-    color: 'white',
-    '&:hover': {
-      backgroundColor: '#45a049',
+
+    orderSubmit: {
+      maxWidth: 800,
+      margin: '0 auto',
+      padding: 20,
+      paddingTop: 130,
+      border: '1px solid #555',
+      borderRadius: 8,
+      backgroundColor: '#f5f3f2',
+      color: '#F2F2F2',
+      '@media (max-width: 768px)': {
+        paddingTop: 130,
+      },
     },
-  },
-  buttonCancel: {
-    backgroundColor: '#f44336',
-    color: 'white',
-    '&:hover': {
-      backgroundColor: '#e53935',
+    header: {
+      textAlign: 'center',
+      marginBottom: 20,
+      fontSize: '1.8em',
+      color: '#F96D00',
+      '@media (max-width: 480px)': {
+        fontSize: '1.5em',
+      },
     },
-  },
-  error: {
-    color: 'red',
-    fontSize: '0.9em',
-    marginTop: -10,
-  },
-});
+    form: {
+      display: 'grid',
+      gridTemplateColumns: '1fr 1fr',
+      gap: 15,
+      '@media (max-width: 768px)': {
+        gridTemplateColumns: '1fr',
+      },
+    },
+    formGroup: {
+      display: 'flex',
+      flexDirection: 'column',
+    },
+    label: {
+      marginBottom: 5,
+      fontWeight: 'bold',
+      color: 'black',
+    },
+    input: {
+      padding: 10,
+      border: '1px solid #ccc',
+      borderRadius: 4,
+      backgroundColor: '#EEEEEE',
+      color: '#393E46',
+      fontSize: '1em',
+      '&:focus': {
+        borderColor: '#F96D00',
+        outline: 'none',
+      },
+    },
+    buttonSubmit: {
+      gridColumn: 'span 2',
+      marginTop: 20,
+      padding: 12,
+      border: 'none',
+      borderRadius: 4,
+      cursor: 'pointer',
+      backgroundColor: '#F96D00',
+      color: '#F2F2F2',
+      fontWeight: 'bold',
+      fontSize: '1em',
+      textTransform: 'uppercase',
+      '&:hover': {
+        backgroundColor: '#FF8C33',
+      },
+      '@media (max-width: 768px)': {
+        gridColumn: 'span 1',
+      },
+    },
+    buttonCancel: {
+      marginTop: 10,
+      padding: 12,
+      border: 'none',
+      borderRadius: 4,
+      cursor: 'pointer',
+      backgroundColor: '#6c757d',
+      color: '#F2F2F2',
+      fontWeight: 'bold',
+      '&:hover': {
+        backgroundColor: '#565e64',
+      },
+    },
+    error: {
+      color: '#FF4E50',
+      fontSize: '0.9em',
+      marginTop: -10,
+      textAlign: 'center',
+    },
+  });
+  
+
 
 const Order = () => {
   const classes = useStyles();
@@ -220,7 +257,7 @@ const Order = () => {
   }
 
   return (
-    <div className={classes.userInfo}>
+    <div className={classes.orderSubmit}>
       <h2 className={classes.header}>Order Proceed</h2>
       {formError && <p className={classes.error}>{formError}</p>}
       <form onSubmit={handleFormSubmit} className={classes.form}>

@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { getAuthToken } from "../../services/BackendService";
 import { createUseStyles } from 'react-jss';
+import { ToastContainer, toast } from 'react-toastify';
 
 const useStyles = createUseStyles({
   userInfo: {
@@ -11,6 +12,7 @@ const useStyles = createUseStyles({
     border: "1px solid #ddd",
     borderRadius: "8px",
     backgroundColor: "#f9f9f9",
+    color:"black",
   },
   header: {
     textAlign: "center",
@@ -82,7 +84,73 @@ const useStyles = createUseStyles({
       margin: "5px 0",
     },
   },
+
+  formContainer: {
+    backgroundColor: "#393E46",
+    color: "#F2F2F2",
+    maxWidth: "600px",
+    margin: "0 auto",
+    padding: "20px",
+    borderRadius: "10px",
+    boxShadow: "3px 3px 5px rgba(0, 0, 0, 0.5)",
+    display: "flex",
+    flexDirection: "column",
+    gap: "5px",
+    "& div": {
+      display: "flex",
+      flexDirection: "column",
+    },
+    "& buttonsContainer": {
+      display: "block",
+    },
+    "& label": {
+      fontWeight: "bold",
+      marginBottom: "5px",
+      textAlign: "left",
+    },
+    "& input, & textarea, & select": {
+      width: "90%",
+      padding: "10px",
+      border: "1px solid #ccc",
+      borderRadius: "8px",
+      backgroundColor: "#F2F2F2",
+      color: "#393E46",
+      fontSize: "1em",
+    },
+  },
+  
+  buttonsContainer: {
+    width: "94%",
+
+
+    gap: "10px", 
+    marginTop: "20px",
+    "& button": {
+      padding: "10px 20px",
+      fontSize: "1em",
+      borderRadius: "8px",
+      border: "none",
+      cursor: "pointer",
+      transition: "background-color 0.3s",
+    },
+    "& button[type='submit']": {
+      backgroundColor: "#F96D00",
+      color: "#F2F2F2",
+      "&:hover": {
+        backgroundColor: "#ff8c33",
+      },
+    },
+    "& button[type='button']": {
+      backgroundColor: "#6c757d",
+      color: "#F2F2F2",
+      "&:hover": {
+        backgroundColor: "#565e64",
+      },
+    },
+  },
+  
 });
+
 
 function UserInfo() {
   const classes = useStyles();
@@ -217,6 +285,31 @@ function UserInfo() {
     }
   };
 
+  const retryPayment = (order) => {
+    const token = getAuthToken();
+    fetch(`http://localhost:8080/orders/${order.id}/retry-payment`, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${token}`
+      },
+    })
+      .then((response) => {
+        if (!response.ok) {
+          throw new Error('Failed to retry payment.');
+        }
+        return response.text();
+      })
+      .then((redirectUri) => {
+        toast.info('Redirecting to payment...');
+        window.location.href = redirectUri;
+      })
+      .catch((error) => {
+        toast.error(error.message);
+      });
+  };
+  
+
   if (loading) {
     return <div>Loading...</div>;
   }
@@ -229,7 +322,7 @@ function UserInfo() {
     <div className={classes.userInfo}>
       <h2 className={classes.header}>User Information</h2>
       {isEditing ? (
-        <form className={classes.form} onSubmit={handleFormSubmit}>
+        <form className={classes.formContainer} onSubmit={handleFormSubmit}>
           <div>
             <label>Email:</label>
             <input type="email" name="email" value={userInfo.email} readOnly />
@@ -250,10 +343,10 @@ function UserInfo() {
             <label>Address:</label>
             <input type="text" name="address" value={userInfo.address} onChange={handleInputChange} />
           </div>
-          <div>
-            
-          </div>          <button type="submit">Save</button>
-          <button type="button" onClick={() => setIsEditing(false)}>Cancel</button>
+          <div className={classes.buttonsContainer}>
+            <button type="submit">Save</button>
+            <button type="button" onClick={() => setIsEditing(false)}>Cancel</button>
+          </div>
         </form>
       ) : (
         <div className={classes.displayUserInfo}>
@@ -277,6 +370,11 @@ function UserInfo() {
               <p><strong>Status:</strong> {order.status}</p>
               <p><strong>Address:</strong> {order.address}</p>
               <p><strong>Service:</strong> {order.service}</p>
+              {order.status !== "PAID" && (
+                <button onClick={() => retryPayment(order)} className={classes.button}>
+                  Retry Payment
+                </button>
+              )}
               <h3>Products:</h3>
               <ul>
                 {order.orderProducts.map(product => (
@@ -284,6 +382,7 @@ function UserInfo() {
                     <p><strong>Product Name:</strong> {product.product.name}</p>
                     <p><strong>Quantity:</strong> {product.quantity}</p>
                     <p><strong>Price:</strong> ${product.product.price}</p>
+         
                   </li>
                 ))}
               </ul>

@@ -61,7 +61,8 @@ function CheckOrder() {
   const classes = useStyles();
   const [order, setOrder] = useState(null);
   const [loading, setLoading] = useState(true);
-  const { orderId } = useParams(); 
+  const [paymentVerified, setPaymentVerified] = useState(false);
+  const { orderId } = useParams();
 
   useEffect(() => {
     const token = getAuthToken();
@@ -70,7 +71,6 @@ function CheckOrder() {
       setLoading(false);
       return;
     }
-
 
     fetch(`http://localhost:8080/orders/my-order/${orderId}`, {
       method: 'GET',
@@ -89,7 +89,7 @@ function CheckOrder() {
         setOrder(data);
         setLoading(false);
 
-        verifyPayment(orderId);
+        verifyPayment(orderId, token);
       })
       .catch((error) => {
         toast.error(error.message);
@@ -97,8 +97,7 @@ function CheckOrder() {
       });
   }, [orderId]);
 
-  const verifyPayment = (orderId) => {
-    const token = getAuthToken();
+  const verifyPayment = (orderId, token) => {
     fetch(`http://localhost:8080/orders/verify-payment/${orderId}`, {
       method: 'GET',
       headers: {
@@ -110,12 +109,40 @@ function CheckOrder() {
       .then((result) => {
         if (result === "Order has been paid successfully") {
           toast.success(result);
+          setPaymentVerified(true);
+          setOrder((prevOrder) => ({ ...prevOrder, status: "PAID" }));
         } else {
           toast.error(result);
         }
       })
-      .catch(() => toast.error('Error verifying payment.'));
-    }
+      .catch(() => {
+        toast.error('Error verifying payment.');
+      });
+  };
+
+  const retryPayment = () => {
+    const token = getAuthToken();
+    fetch(`http://localhost:8080/orders/${order.id}/retry-payment`, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${token}`
+      },
+    })
+      .then((response) => {
+        if (!response.ok) {
+          throw new Error('Failed to retry payment.');
+        }
+        return response.text();
+      })
+      .then((redirectUri) => {
+        toast.info('Redirecting to payment...');
+        window.location.href = redirectUri;
+      })
+      .catch((error) => {
+        toast.error(error.message);
+      });
+  };
 
   if (loading) {
     return <p>Loading order...</p>;
@@ -144,11 +171,15 @@ function CheckOrder() {
           </tr>
         </tbody>
       </table>
-      <ToastContainer />
-      <ToastContainer {...customToastContainer} />
-
-    </div>
+      {!paymentVerified && order.status !== "PAID" && (
+        <button onClick={retryPayment} className={classes.button}>
+          Retry Payment
+        </button>
+      )}
+   <ToastContainer {...customToastContainer} /> 
+  </div>
   );
 }
 
 export default CheckOrder;
+
