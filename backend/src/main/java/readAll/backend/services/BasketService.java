@@ -11,7 +11,6 @@ import readAll.backend.model.User;
 import readAll.backend.repository.BasketRepository;
 import readAll.backend.repository.ProductRepository;
 import org.springframework.stereotype.Service;
-import readAll.backend.services.UserService;
 
 @Service
 public class BasketService {

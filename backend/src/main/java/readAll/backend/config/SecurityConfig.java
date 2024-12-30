@@ -15,7 +15,7 @@ import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.HttpStatusEntryPoint;
 import org.springframework.security.web.authentication.www.BasicAuthenticationFilter;
-import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
+// import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 import org.springframework.web.cors.CorsConfiguration;
 import org.springframework.web.cors.CorsConfigurationSource;
 import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
@@ -60,7 +60,7 @@ public class SecurityConfig {
                 .addFilterBefore(new JwtAuthFilter(userAuthenticationProvider), BasicAuthenticationFilter.class)
                 .authorizeHttpRequests(auth -> auth
                         .requestMatchers("/images/**").permitAll()
-                        // .requestMatchers(HttpMethod.PUT, "/products/**").hasRole("ADMIN")
+                        .requestMatchers("/users/**").hasAnyRole("USER", "ADMIN")
                         // .requestMatchers(HttpMethod.GET, "/products/**").permitAll()
                         // .anyRequest().authenticated()
                 )
@@ -70,10 +70,10 @@ public class SecurityConfig {
                 .authorizeHttpRequests(auth -> auth .requestMatchers(toH2Console()).permitAll())
                 .authorizeHttpRequests((requests) -> requests
                         // .requestMatchers("/h2-console/**").permitAll()
-                        // .requestMatchers("/baskets/**").hasRole("USER")
-                        // .requestMatchers(HttpMethod.POST, "/products/**").hasRole("ADMIN")
-                        // .requestMatchers(HttpMethod.PUT, "/products/**").hasRole("ADMIN")
-                        // .requestMatchers(HttpMethod.DELETE, "/products/**").hasRole("ADMIN")
+                        .requestMatchers("/baskets/**").hasAnyRole("USER", "ADMIN")
+                        .requestMatchers(HttpMethod.POST, "/products/**").hasRole("ADMIN")
+                        .requestMatchers(HttpMethod.PUT, "/products/**").hasRole("ADMIN")
+                        .requestMatchers(HttpMethod.DELETE, "/products/**").hasRole("ADMIN")
                         .anyRequest().permitAll())
                         
         ;

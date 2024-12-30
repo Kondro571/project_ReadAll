@@ -1,6 +1,5 @@
 package readAll.backend.controller;
 
-import org.apache.tomcat.util.http.fileupload.IOUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.core.io.ResourceLoader;
@@ -13,10 +12,7 @@ import jakarta.servlet.http.HttpServletRequest;
 
 import java.io.File;
 import java.io.IOException;
-import java.io.InputStream;
 
-import org.springframework.core.io.Resource;
-import org.springframework.core.io.ResourceLoader;
 
 @RestController
 public class FileUploadController {

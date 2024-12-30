@@ -1,24 +1,20 @@
 package readAll.backend.controller;
 
 import org.springframework.security.core.Authentication;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
 
-import jakarta.persistence.EntityManager;
-import jakarta.persistence.PersistenceContext;
-import jakarta.persistence.Query;
+
 
 import lombok.RequiredArgsConstructor;
 
 import readAll.backend.dtos.UserDto;
 import readAll.backend.model.User;
-import readAll.backend.repository.UserRepository;
 import readAll.backend.services.UserService;
 
-import org.springframework.security.core.context.SecurityContextHolder;
+
 
 
 import java.util.List;

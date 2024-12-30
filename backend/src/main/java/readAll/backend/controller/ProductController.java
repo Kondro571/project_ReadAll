@@ -1,7 +1,6 @@
 package readAll.backend.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.core.io.ClassPathResource;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -10,21 +9,15 @@ import org.springframework.security.core.Authentication;
 
 import readAll.backend.dtos.ProductDto;
 import readAll.backend.dtos.UserDto;
-import readAll.backend.model.Category;
 import readAll.backend.model.Product;
-import readAll.backend.repository.CategoryRepository;
-import readAll.backend.repository.ProductRepository;
+
 import readAll.backend.services.ProductPhotoService;
 import readAll.backend.services.ProductService;
 
 import java.io.IOException;
-import java.nio.file.Files;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Optional;
-import java.util.Set;
 
-import org.springframework.core.io.Resource;
+import java.util.List;
+
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
 
@@ -90,6 +83,13 @@ public class ProductController {
 
     @DeleteMapping("/{productId}")
     public ResponseEntity<?> deleteProduct(@PathVariable Long productId) {
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        UserDto userDto = (UserDto) authentication.getPrincipal();
+        
+        if (!userDto.getRole().name().equals("ADMIN")) {
+            return ResponseEntity.status(HttpStatus.FORBIDDEN).build();
+        }
+
         try {
             productService.deleteProduct(productId);
             return ResponseEntity.ok().build();

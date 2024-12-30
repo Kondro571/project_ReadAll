@@ -1,5 +1,6 @@
 package readAll.backend.controller;
 
+import org.hibernate.ObjectNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -66,10 +67,37 @@ public class OrderController {
 
     @PostMapping("/{orderId}/retry-payment")
     public ResponseEntity<String> retryPayment(@PathVariable Long orderId) {
-        String redirectUri = orderService.repeatPayment(orderId);
-        return ResponseEntity.ok(redirectUri);
+        // Pobranie danych użytkownika z kontekstu bezpieczeństwa
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        if (authentication == null || !(authentication.getPrincipal() instanceof UserDto)) {
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED)
+                    .body("User not authenticated");
+        }
+
+        UserDto userDto = (UserDto) authentication.getPrincipal();
+        Long userId = userDto.getId(); // Zakładam, że UserDto zawiera ID użytkownika
+
+        try {
+            // Weryfikacja czy użytkownik jest właścicielem zamówienia
+            boolean isOwner = orderService.isOrderOwner(orderId, userId);
+            if (!isOwner) {
+                return ResponseEntity.status(HttpStatus.FORBIDDEN)
+                        .body("User is not authorized to retry payment for this order");
+            }
+
+            // Ponowienie płatności
+            String redirectUri = orderService.repeatPayment(orderId);
+            return ResponseEntity.ok(redirectUri);
+        } catch (RuntimeException e) { // Poprawiono wyjątek
+            return ResponseEntity.status(HttpStatus.NOT_FOUND)
+                    .body("Order not found: " + e.getMessage());
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
+                    .body("Error processing retry payment: " + e.getMessage());
+        }
     }
 
+    
 
 
 

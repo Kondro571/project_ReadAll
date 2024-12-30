@@ -1,4 +1,5 @@
 package readAll.backend.services;
+import org.hibernate.ObjectNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import readAll.backend.dtos.OrderDto;
@@ -13,7 +14,6 @@ import readAll.backend.repository.OrderProductRepository;
 import readAll.backend.repository.OrderRepository;
 import readAll.backend.repository.TransactionRepository;
 
-import java.nio.file.AccessDeniedException;
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -65,6 +65,15 @@ public class OrderService {
 
         return order;
     }
+
+    public boolean isOrderOwner(Long orderId, Long userId) {
+        Order order = orderRepository.findById(orderId)
+                .orElseThrow(() -> new RuntimeException("Order not found with ID: " + orderId));
+    
+        // Zakładam, że Order ma powiązany Customer i jego ID
+        return order.getCustomer().getId().equals(userId);
+    }
+    
 
     
     public OrderResponseDto createOrder(Long userId, OrderDto orderDto) {
